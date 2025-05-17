@@ -309,7 +309,7 @@ Actual/Predicted0       1       Accuracy
 -----------------------------------------
 Overall Accuracy: 94.27%
 Best Overall Accuracy till now is: 94.27%
-Training accuracy: 1.0000         
+Training accuracy: 1.0000
 Last testing data is saved to galaxies_Last_testing.csv
 Last training data is saved to galaxies_Last_training.csv
 Saved model and data due to improved training accuracy
@@ -361,12 +361,12 @@ Actual/Predicted0       1       Accuracy
 -----------------------------------------
 Overall Accuracy: 96.90%
 Best Overall Accuracy till now is: 96.90%
-Training accuracy: 0.8206         
+Training accuracy: 0.8206
 Improved training accuracy to 0.8206
 Last testing data is saved to galaxies_Last_testing.csv
 Last training data is saved to galaxies_Last_training.csv
 Saved model and data due to improved training accuracy
-Total samples selected: 49                                                           
+Total samples selected: 49
 Resetting to initial conditions of best round None
 Added 49 new samples to training set
 Round 3/20
@@ -415,7 +415,7 @@ Actual/Predicted0       1       Accuracy
 -----------------------------------------
 Overall Accuracy: 97.02%
 Best Overall Accuracy till now is: 97.02%
-Training accuracy: 0.7610         
+Training accuracy: 0.7610
 Improved training accuracy to 0.7610
 Last testing data is saved to galaxies_Last_testing.csv
 Last training data is saved to galaxies_Last_training.csv
@@ -519,13 +519,13 @@ Rings          1       1194     99.92%
 -----------------------------------------
 Overall Accuracy: 99.94%
 Best Overall Accuracy till now is: 99.94%
-Training accuracy: 0.9974         
+Training accuracy: 0.9974
 Improved training accuracy to 0.9974
 Last testing data is saved to galaxies_Last_testing.csv
 Last training data is saved to galaxies_Last_training.csv
 Saved model and data due to improved training accuracy
  Batch size updated to- Optimal batch size: 4096
-Total samples selected: 0                                                           
+Total samples selected: 0
 No suitable new samples found. Training complete.
 Adaptive training started at: 2025-03-27 18:14:00
 Adaptive training ended at: 2025-03-27 20:03:20

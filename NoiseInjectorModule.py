@@ -1,15 +1,18 @@
 import os
+import tkinter as tk
+from pathlib import Path
+from tkinter import filedialog, messagebox, ttk
+
 import numpy as np
 import torch
 import torchvision.transforms as transforms
 from PIL import Image, ImageTk
-from pathlib import Path
-import tkinter as tk
-from tkinter import ttk, filedialog, messagebox
-#--------------------------Noise Injection Module ----------------------------
+
+# --------------------------Noise Injection Module ----------------------------
 # This module introduces different kinds of noise in images
 # author: Ninan Sajeeth Philip, April 14 2025
-#---------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------
+
 
 class NoiseInjectionApp:
     def __init__(self, root):
@@ -21,14 +24,19 @@ class NoiseInjectionApp:
         self.input_folder = tk.StringVar()
         self.output_folder = tk.StringVar()
         self.noise_types = [
-            "Gaussian", "Salt & Pepper", "Poisson",
-            "Speckle", "Rayleigh", "Exponential", "Uniform"
+            "Gaussian",
+            "Salt & Pepper",
+            "Poisson",
+            "Speckle",
+            "Rayleigh",
+            "Exponential",
+            "Uniform",
         ]
 
         # Initialize dictionaries
         self.slider_widgets = {}  # Stores slider widgets
-        self.noise_values = {}    # Stores current noise values
-        self.scale_vars = {}      # Stores scale type variables
+        self.noise_values = {}  # Stores current noise values
+        self.scale_vars = {}  # Stores scale type variables
 
         self.preview_image = None
         self.processed_image = None
@@ -48,13 +56,23 @@ class NoiseInjectionApp:
 
         # Input folder
         ttk.Label(folder_frame, text="Input Folder:").grid(row=0, column=0, sticky=tk.W)
-        ttk.Entry(folder_frame, textvariable=self.input_folder, width=50).grid(row=0, column=1, padx=5)
-        ttk.Button(folder_frame, text="Browse", command=self.browse_input).grid(row=0, column=2)
+        ttk.Entry(folder_frame, textvariable=self.input_folder, width=50).grid(
+            row=0, column=1, padx=5
+        )
+        ttk.Button(folder_frame, text="Browse", command=self.browse_input).grid(
+            row=0, column=2
+        )
 
         # Output folder
-        ttk.Label(folder_frame, text="Output Folder:").grid(row=1, column=0, sticky=tk.W)
-        ttk.Entry(folder_frame, textvariable=self.output_folder, width=50).grid(row=1, column=1, padx=5)
-        ttk.Button(folder_frame, text="Browse", command=self.browse_output).grid(row=1, column=2)
+        ttk.Label(folder_frame, text="Output Folder:").grid(
+            row=1, column=0, sticky=tk.W
+        )
+        ttk.Entry(folder_frame, textvariable=self.output_folder, width=50).grid(
+            row=1, column=1, padx=5
+        )
+        ttk.Button(folder_frame, text="Browse", command=self.browse_output).grid(
+            row=1, column=2
+        )
 
         # Noise controls frame
         noise_frame = ttk.LabelFrame(self.root, text="Noise Controls", padding=10)
@@ -69,19 +87,30 @@ class NoiseInjectionApp:
             scale_var = tk.StringVar(value="Linear")
             self.scale_vars[noise] = scale_var
             ttk.Radiobutton(
-                noise_frame, text="Linear", variable=scale_var, value="Linear",
-                command=lambda n=noise: self.update_slider_scale(n)
+                noise_frame,
+                text="Linear",
+                variable=scale_var,
+                value="Linear",
+                command=lambda n=noise: self.update_slider_scale(n),
             ).grid(row=i, column=0, padx=5, sticky=tk.W)
             ttk.Radiobutton(
-                noise_frame, text="Log", variable=scale_var, value="Log",
-                command=lambda n=noise: self.update_slider_scale(n)
+                noise_frame,
+                text="Log",
+                variable=scale_var,
+                value="Log",
+                command=lambda n=noise: self.update_slider_scale(n),
             ).grid(row=i, column=1, padx=5, sticky=tk.W)
 
             # Noise slider
-            ttk.Label(noise_frame, text=f"{noise} Noise:").grid(row=i, column=2, sticky=tk.W)
+            ttk.Label(noise_frame, text=f"{noise} Noise:").grid(
+                row=i, column=2, sticky=tk.W
+            )
             slider = ttk.Scale(
-                noise_frame, from_=0, to=1, orient=tk.HORIZONTAL,
-                command=lambda val, n=noise: self.on_slider_change(val, n)
+                noise_frame,
+                from_=0,
+                to=1,
+                orient=tk.HORIZONTAL,
+                command=lambda val, n=noise: self.on_slider_change(val, n),
             )
             slider.grid(row=i, column=3, sticky=tk.EW, padx=5)
             self.slider_widgets[noise] = slider  # Store the slider widget
@@ -89,7 +118,11 @@ class NoiseInjectionApp:
             # Value display
             value_label = ttk.Label(noise_frame, text="0.00")
             value_label.grid(row=i, column=4, padx=5)
-            setattr(self, f"{noise.lower().replace(' ', '_').replace('&', '')}_value", value_label)
+            setattr(
+                self,
+                f"{noise.lower().replace(' ', '_').replace('&', '')}_value",
+                value_label,
+            )
 
         # Preview frame
         preview_frame = ttk.LabelFrame(self.root, text="Preview", padding=10)
@@ -109,7 +142,7 @@ class NoiseInjectionApp:
         gauge_frame = ttk.LabelFrame(self.root, text="Total Noise Level", padding=10)
         gauge_frame.pack(fill=tk.X, padx=10, pady=5)
 
-        self.gauge_canvas = tk.Canvas(gauge_frame, height=30, bg='white')
+        self.gauge_canvas = tk.Canvas(gauge_frame, height=30, bg="white")
         self.gauge_canvas.pack(fill=tk.X)
         self.gauge_level = 0
         self.update_gauge()
@@ -119,13 +152,11 @@ class NoiseInjectionApp:
         button_frame.pack(fill=tk.X, padx=10, pady=10)
 
         ttk.Button(
-            button_frame, text="Load Sample Image",
-            command=self.load_sample_image
+            button_frame, text="Load Sample Image", command=self.load_sample_image
         ).pack(side=tk.LEFT, padx=5)
 
         ttk.Button(
-            button_frame, text="Process All Images",
-            command=self.process_all_images
+            button_frame, text="Process All Images", command=self.process_all_images
         ).pack(side=tk.RIGHT, padx=5)
 
     def browse_input(self):
@@ -157,12 +188,14 @@ class NoiseInjectionApp:
             scale_type = self.scale_vars[noise_type].get()
 
             if scale_type == "Log":
-                actual_value = 10 ** value
+                actual_value = 10**value
             else:
                 actual_value = value
 
             # Update the displayed value
-            value_label = getattr(self, f"{noise_type.lower().replace(' ', '_').replace('&', '')}_value")
+            value_label = getattr(
+                self, f"{noise_type.lower().replace(' ', '_').replace('&', '')}_value"
+            )
             value_label.config(text=f"{actual_value:.4f}")
 
             # Store the actual value
@@ -185,7 +218,7 @@ class NoiseInjectionApp:
         image_path = None
         for root, _, files in os.walk(input_folder):
             for file in files:
-                if file.lower().endswith(('.png', '.jpg', '.jpeg', '.bmp', '.tiff')):
+                if file.lower().endswith((".png", ".jpg", ".jpeg", ".bmp", ".tiff")):
                     image_path = os.path.join(root, file)
                     break
             if image_path:
@@ -241,7 +274,6 @@ class NoiseInjectionApp:
         original_display = resize_image(self.preview_image.copy())
         noisy_display = resize_image(noisy_image.copy())
 
-
         # Convert to Tkinter PhotoImage
         self.tk_images = []  # Clear previous images to prevent garbage collection
         original_tk = ImageTk.PhotoImage(original_display)
@@ -292,14 +324,18 @@ class NoiseInjectionApp:
         # Rayleigh noise
         if self.noise_values["Rayleigh"] > 0:
             scale = self.noise_values["Rayleigh"]
-            noise = torch.from_numpy(np.random.rayleigh(scale, size=noisy_image.shape)).float()
+            noise = torch.from_numpy(
+                np.random.rayleigh(scale, size=noisy_image.shape)
+            ).float()
             noisy_image += noise
             total_noise_level += scale
 
         # Exponential noise
         if self.noise_values["Exponential"] > 0:
             scale = self.noise_values["Exponential"]
-            noise = torch.from_numpy(np.random.exponential(scale, size=noisy_image.shape)).float()
+            noise = torch.from_numpy(
+                np.random.exponential(scale, size=noisy_image.shape)
+            ).float()
             noisy_image += noise
             total_noise_level += scale
 
@@ -329,17 +365,20 @@ class NoiseInjectionApp:
         # Determine color (green to red)
         r = int(min(255, 255 * self.gauge_level * 2))
         g = int(min(255, 255 * (1 - self.gauge_level * 2)))
-        color = f'#{r:02x}{g:02x}00'
+        color = f"#{r:02x}{g:02x}00"
 
         # Draw gauge
-        self.gauge_canvas.create_rectangle(0, 0, fill_width, height, fill=color, outline="")
+        self.gauge_canvas.create_rectangle(
+            0, 0, fill_width, height, fill=color, outline=""
+        )
         self.gauge_canvas.create_rectangle(0, 0, width, height, outline="black")
 
         # Add text
         self.gauge_canvas.create_text(
-            width//2, height//2,
+            width // 2,
+            height // 2,
             text=f"Total Noise: {self.gauge_level:.2f}",
-            fill="black" if self.gauge_level < 0.5 else "white"
+            fill="black" if self.gauge_level < 0.5 else "white",
         )
 
     def process_all_images(self):
@@ -366,7 +405,7 @@ class NoiseInjectionApp:
             os.makedirs(output_root, exist_ok=True)
 
             for file in files:
-                if file.lower().endswith(('.png', '.jpg', '.jpeg', '.bmp', '.tiff')):
+                if file.lower().endswith((".png", ".jpg", ".jpeg", ".bmp", ".tiff")):
                     try:
                         # Load image
                         input_path = os.path.join(root, file)
@@ -381,13 +420,17 @@ class NoiseInjectionApp:
                         noisy_image = transforms.ToPILImage()(noisy_tensor.squeeze(0))
 
                         # Save with original metadata
-                        noisy_image.save(output_path, quality=95, exif=img.info.get("exif", b""))
+                        noisy_image.save(
+                            output_path, quality=95, exif=img.info.get("exif", b"")
+                        )
 
                         processed_count += 1
                     except Exception as e:
                         print(f"Error processing {file}: {str(e)}")
 
-        messagebox.showinfo("Processing Complete", f"Successfully processed {processed_count} images")
+        messagebox.showinfo(
+            "Processing Complete", f"Successfully processed {processed_count} images"
+        )
 
 
 if __name__ == "__main__":

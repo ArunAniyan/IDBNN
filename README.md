@@ -1,6 +1,7 @@
 # For the lazy guy
+
 ```
-git pull 
+git pull
 To train/predcit using cdbnn (For Image Feature Extraction)
   python cdbnn.py [arguments]
     print("Welcome to Convolution DBNN")
@@ -25,13 +26,14 @@ To train/predict using adbnn  (For Difference Boosting Neural Network
 
 
 ```
+
 ![image](https://github.com/user-attachments/assets/dfb40806-5bb2-4e19-afea-57c0f39145df)
 
 ![image](https://github.com/user-attachments/assets/48ce9afe-bbb8-4736-936c-e2754245437f)
 
 ![image](https://github.com/user-attachments/assets/cc891ddc-e23c-4937-968b-4311bdcb3bb4)
 
-When predicting data with known labels, you also get 
+When predicting data with known labels, you also get
 
 ![image](https://github.com/user-attachments/assets/c2fd1ac1-c025-4237-bb68-e15f96a4aa99)
 
@@ -39,13 +41,12 @@ When predicting data with known labels, you also get
 
 ![image](https://github.com/user-attachments/assets/2e1a02c9-f66a-4585-b5ba-a90d366058fa)
 
-
 # What is the Difference Boosting Neural Network?
 
-Information is in the differences and not in the details. That is the key concept behind the Nov 2000 paper on  Boosting the differences: A fast Bayesian classifier neural network (https://doi.org/10.3233/IDA-2000-4602). It is an extension to the basic nonparametric Bayesian Probability estimate for classification.
+Information is in the differences and not in the details. That is the key concept behind the Nov 2000 paper on Boosting the differences: A fast Bayesian classifier neural network (https://doi.org/10.3233/IDA-2000-4602). It is an extension to the basic nonparametric Bayesian Probability estimate for classification.
 Though it extends the Bayesian concept of likelihood and posterior probability, the two have some fundamental differences. In the Bayesian concept, prior is the prejudice about the outcome before any observation is done and, in most implementations, is taken as a constant value to represent the belief in the outcome. In DBNN, it is a variable that is constantly updated during the learning process. Logically, the belief gets updated as information accumulates. So, in DBNN, the likelihood or evidence may remain the same, but to maximise the accuracy of the prediction, the prior belief is updated iteratively. In Neural Network terminology, this prior belief becomes the weights.
 
-The Bayesian posterior is estimated as $P(A|B) = \frac{P(A) \cdot P(B|A)}{P(B)}$ where $P(A)$ is the belief or prior about the outcome and $P(B|A)$ is the likelihood that the observation of the evidence B can cause A to happen. The simplest example is the likelihood for it to rain, given that clouds are in the sky. Now, the clouds can have different densities, and one can have different outcomes for the rain based on it. A simple mathematical representation would be to plot a histogram of the cloud density as a function of rain and call it the distribution of rainfall as a function of cloud density. However, clouds are just one parameter, and rainfall may depend on many other parameters, such as humidity, wind, etc. So the likelihood for it to rain, in this case, $P(cloud density, wind, humidity | rain)$, is the joint likelihood for the rain to happen, given that all the independent observations are done. 
+The Bayesian posterior is estimated as $P(A|B) = \frac{P(A) \cdot P(B|A)}{P(B)}$ where $P(A)$ is the belief or prior about the outcome and $P(B|A)$ is the likelihood that the observation of the evidence B can cause A to happen. The simplest example is the likelihood for it to rain, given that clouds are in the sky. Now, the clouds can have different densities, and one can have different outcomes for the rain based on it. A simple mathematical representation would be to plot a histogram of the cloud density as a function of rain and call it the distribution of rainfall as a function of cloud density. However, clouds are just one parameter, and rainfall may depend on many other parameters, such as humidity, wind, etc. So the likelihood for it to rain, in this case, $P(cloud density, wind, humidity | rain)$, is the joint likelihood for the rain to happen, given that all the independent observations are done.
 
 ## Naive Bayesian Classifier
 
@@ -53,13 +54,13 @@ In 1997, in his paper BOOSTING AND NAIVE BAYESIAN LEARNING, Charles Elkan propos
 
 ## The DBNN approach
 
-The DBNN overcomes the limitation of the Naive Bayes by introducing a Conditional independence of pairwise features. That means DBNN argues that if the joint likelihood of all unique pairs of features is known, their product can be used to substitute the joint likelihood in the Bayesian computation. That means, instead of simultaneously measuring the joint probability of all the independent variables, one must only compute a pairwise likelihood of all unique combinations of the features. In the rain example, it means, $P(cloud density, wind, humidity | rain)$ can be replaced by the product of $P(cloud density, wind) \times P(cloud density, humidity) \times P(wind,humidity) | rain)$ simplifying the Bayesian estimation without affecting its reliability. 
+The DBNN overcomes the limitation of the Naive Bayes by introducing a Conditional independence of pairwise features. That means DBNN argues that if the joint likelihood of all unique pairs of features is known, their product can be used to substitute the joint likelihood in the Bayesian computation. That means, instead of simultaneously measuring the joint probability of all the independent variables, one must only compute a pairwise likelihood of all unique combinations of the features. In the rain example, it means, $P(cloud density, wind, humidity | rain)$ can be replaced by the product of $P(cloud density, wind) \times P(cloud density, humidity) \times P(wind,humidity) | rain)$ simplifying the Bayesian estimation without affecting its reliability.
 
 ## Learning in DBNN model
 
 As mentioned before, learning in DBNN is done through updating the Prior or blind belief in the outcome. This is also how our beliefs get modified over time through experience. When we find that it won't rain as we thought it would, given the evidence, we do not attempt to modify the evidence but rather update our priors or beliefs. Like in Neural Networks, DBNN uses the gradient descent rule to update the priors or weights. The primary difference from the standard neural network model is that the loss function is defined in terms of the probabilities, not individual values. For example, let $P_1$ and $P_2$ be the posterior probabilities obtained by the Bayes rule for the correct and the wrong labels for a particular data. Let us assume that the prediction is wrong and that the posterior for the wrong label $P_2$ is much higher than the posterior $P_1$ for the correct label. We then define the loss as $(P_1 - P_2)^2$ and thus update the weights (priors) of the associated likelihoods proportional to the negative gradient (derivative) of this error by multiplying it with a learning constant like in standard neural network backpropagation algorithm. Thus, the update rule now becomes:
 
-$$P(A_{1}) = P(A_{1})+lc \times (1-\frac{P1}{P2})$$ 
+$$P(A_{1}) = P(A_{1})+lc \times (1-\frac{P1}{P2})$$
 
 where the prior or weight for the outcome A for the likelihood of class 1 (in this case) is incremented proportionally to the differences in the posteriors for the correct and wrong predictions, giving the learning model its name, DIfference Boosting.
 
@@ -75,7 +76,7 @@ In the paper "Automated Detection of Galactic Rings from Sloan Digital Sky Surve
 
 ![image](https://github.com/user-attachments/assets/2f46c442-82a8-4699-8d11-ad86995793a6)
 
-However, when adaptive learning is used, with just 471 training examples in 11 epochs, the DBNN classifier could achieve 100% accurate prediction on the entire image data. It may be noted that only two training examples were required from the majority class of non-ring galaxies, while it took about 469 samples from the Ring galaxy types. This is typical of the difference-boosting method, where the network seeks more profound differences (requiring more examples with differences) to learn all that contributes to their classification. The other significant advantage is the higher generalisation capability of the network due to its handpicking capability of decisive samples to train on. 
+However, when adaptive learning is used, with just 471 training examples in 11 epochs, the DBNN classifier could achieve 100% accurate prediction on the entire image data. It may be noted that only two training examples were required from the majority class of non-ring galaxies, while it took about 469 samples from the Ring galaxy types. This is typical of the difference-boosting method, where the network seeks more profound differences (requiring more examples with differences) to learn all that contributes to their classification. The other significant advantage is the higher generalisation capability of the network due to its handpicking capability of decisive samples to train on.
 
 ![image](https://github.com/user-attachments/assets/21ed0816-16f6-41aa-88e1-26cf0d336561)
 
@@ -88,15 +89,14 @@ MNIST is a popular dataset that represents the raster images of numbers 0 to 9, 
 After the second round, the accuracy came to 100%
 ![image](https://github.com/user-attachments/assets/33d01467-a6da-4c82-ac17-5bf953839012)
 
-
-Seeing the high accuracy, the code was subjected to validation by Deepseek and here is the verdict:
-------------------------------------------------------------------------
+## Seeing the high accuracy, the code was subjected to validation by Deepseek and here is the verdict:
 
 To critically analyze the code and verify if there is any "cheating" involved that could lead to unrealistically high accuracy, we need to examine the code incrementally, focusing on key areas that could potentially lead to overfitting, data leakage, or other issues that might artificially inflate accuracy. Here's a step-by-step analysis:
 
 ---
 
 ### **1. Data Loading and Preprocessing**
+
 - **Code Location**: `_load_dataset`, `_preprocess_data`, `_get_train_test_split`
 - **Analysis**:
   - The `_load_dataset` method loads the dataset and handles URL-based datasets. It ensures that the dataset is loaded correctly and filters features based on the configuration.
@@ -109,6 +109,7 @@ To critically analyze the code and verify if there is any "cheating" involved th
 ---
 
 ### **2. Model Initialization and Training**
+
 - **Code Location**: `GPUDBNN.__init__`, `train`, `_compute_pairwise_likelihood_parallel`, `_compute_batch_posterior`
 - **Analysis**:
   - The `GPUDBNN` class initializes the model, loads configuration, and sets up the training process.
@@ -123,6 +124,7 @@ To critically analyze the code and verify if there is any "cheating" involved th
 ---
 
 ### **3. Adaptive Training**
+
 - **Code Location**: `adaptive_fit_predict`
 - **Analysis**:
   - The `adaptive_fit_predict` method implements an adaptive training strategy, where the model iteratively adds misclassified samples to the training set.
@@ -134,6 +136,7 @@ To critically analyze the code and verify if there is any "cheating" involved th
 ---
 
 ### **4. Prediction and Evaluation**
+
 - **Code Location**: `predict`, `fit_predict`, `_generate_detailed_predictions`
 - **Analysis**:
   - The `predict` method makes predictions using the best model weights.
@@ -146,6 +149,7 @@ To critically analyze the code and verify if there is any "cheating" involved th
 ---
 
 ### **5. Weight Updates and Likelihood Computation**
+
 - **Code Location**: `BinWeightUpdater`, `_compute_pairwise_likelihood_parallel`, `_compute_batch_posterior`
 - **Analysis**:
   - The `BinWeightUpdater` class manages the weights for histogram bins or Gaussian components.
@@ -158,6 +162,7 @@ To critically analyze the code and verify if there is any "cheating" involved th
 ---
 
 ### **6. Data Leakage and Overfitting**
+
 - **Code Location**: `_preprocess_data`, `_get_train_test_split`, `fit_predict`
 - **Analysis**:
   - The `_preprocess_data` method computes global statistics (mean, std) for normalization during training. These statistics are then applied to the test set, which is correct.
@@ -170,6 +175,7 @@ To critically analyze the code and verify if there is any "cheating" involved th
 ---
 
 ### **7. Confusion Matrix and Metrics**
+
 - **Code Location**: `print_colored_confusion_matrix`, `fit_predict`
 - **Analysis**:
   - The `print_colored_confusion_matrix` method prints a colored confusion matrix with class-wise accuracy.
@@ -181,6 +187,7 @@ To critically analyze the code and verify if there is any "cheating" involved th
 ---
 
 ### **8. Potential Cheating or Overfitting**
+
 - **Analysis**:
   - The code does not appear to have explicit cheating mechanisms (e.g., using test data during training).
   - However, the model might be overfitting to the training data due to:
@@ -192,6 +199,7 @@ To critically analyze the code and verify if there is any "cheating" involved th
 ---
 
 ### **Recommendations**
+
 1. **Regularization**: Add regularization techniques (e.g., dropout, weight decay) to prevent overfitting.
 2. **Cross-Validation**: Use cross-validation to ensure that the model generalizes well to unseen data.
 3. **Hyperparameter Tuning**: Tune hyperparameters (e.g., learning rate, bin sizes) to prevent overfitting.
@@ -201,21 +209,21 @@ To critically analyze the code and verify if there is any "cheating" involved th
 ---
 
 ### **Conclusion**
-The code does not appear to have explicit cheating mechanisms, but the unrealistically high accuracy could be due to overfitting or issues with the dataset. The lack of regularization and potential overfitting in the adaptive training strategy are the most likely causes. Adding regularization techniques and ensuring proper hyperparameter tuning should help mitigate these issues.
 
+The code does not appear to have explicit cheating mechanisms, but the unrealistically high accuracy could be due to overfitting or issues with the dataset. The lack of regularization and potential overfitting in the adaptive training strategy are the most likely causes. Adding regularization techniques and ensuring proper hyperparameter tuning should help mitigate these issues.
 
 Here is the output for the CIFAR10 dataset:
 
-
 ![image](https://github.com/user-attachments/assets/6d075df3-5be3-40ef-9ef3-9397dfac7506)
 
-------------------------------------------------------------------------
+---
 
 This part of the document is OLD, but most of the revisions ensure backward compatibility.
 
 ![image](https://github.com/user-attachments/assets/fe1e97fe-a4f7-4e10-b433-6e00f5940a3b)
 
 adbnn Algorithm
+
 ```
 For each adaptive round:
     # Inner Training Loop
@@ -229,7 +237,7 @@ For each adaptive round:
             * All training examples correct OR
             * Training accuracy plateaus for patience iterations OR
             * Max epochs reached
-    
+
     # Testing Phase
     - Test on all non-training data
     - For each class in failed test examples:
@@ -239,12 +247,13 @@ For each adaptive round:
         b) Find example with min wrong posterior:
            if P2 margin < marginal_margin_threshold:
               Add if cardinality low and divergence > min_divergence
-    
+
     # Save Split if Improved
     If test_accuracy > best_test_accuracy:
         - Save current training data (before adding new samples)
         - Save current test data (before removing new train examples)
 ```
+
 <svg fill="none" viewBox="0 0 800 400" width="800" height="400" xmlns="http://www.w3.org/2000/svg">
   <foreignObject width="100%" height="100%">
     <div xmlns="http://www.w3.org/2000/svg">
@@ -280,7 +289,7 @@ For each adaptive round:
   </foreignObject>
 </svg>
 
-``` json
+```json
 
 // 1. Main Configuration (dataset_name.json)
 {
@@ -440,13 +449,19 @@ For each adaptive round:
 
 
 ```
+
 ## NOTE:
+
 ## For inverse mode:
+
 # Interactive mode:
+
 python cdbnn.py
 
 # Command line predict mode:
+
 python cdbnn.py --mode predict --data car --data_type custom --invert-dbnn
+
 ```json
 "active_learning": {
     "tolerance": 1.0,
@@ -456,6 +471,7 @@ python cdbnn.py --mode predict --data car --data_type custom --invert-dbnn
     "min_divergence": 0.1
 }
 ```
+
 ```
 In the configuration, the margin thresholds for selecting samples are controlled by
 these parameters in the "active_learning" section:
@@ -468,8 +484,7 @@ failures (cases where the model is very confident but wrong).
 Lower values  (e.g., 0.3) will include more samples.
 ```
 
-
-```
+````
 The reconstruction process involves two key mappings:
 
 The forward mapping (f): Features → Class Probabilities
@@ -534,11 +549,13 @@ The system implements a hybrid feature extraction approach combining convolution
 
 The CNN-based feature extractor employs a hierarchical architecture:
 
-```
-Input → Conv1(32) → BN → ReLU → MaxPool 
-     → Conv2(64) → BN → ReLU → MaxPool 
-     → Conv3(128) → BN → ReLU → AdaptiveAvgPool 
-     → Linear(feature_dims) → BatchNorm
+````
+
+Input → Conv1(32) → BN → ReLU → MaxPool
+→ Conv2(64) → BN → ReLU → MaxPool
+→ Conv3(128) → BN → ReLU → AdaptiveAvgPool
+→ Linear(feature_dims) → BatchNorm
+
 ```
 
 **Mathematical formulation for each layer:**
@@ -553,18 +570,22 @@ The autoencoder implements a symmetric architecture with dynamic sizing:
 
 **Encoder:**
 ```
-Input → Conv(32) → BN → LeakyReLU 
-     → Conv(64) → BN → LeakyReLU 
-     → Conv(128) → BN → LeakyReLU 
-     → Linear(feature_dims)
+
+Input → Conv(32) → BN → LeakyReLU
+→ Conv(64) → BN → LeakyReLU
+→ Conv(128) → BN → LeakyReLU
+→ Linear(feature_dims)
+
 ```
 
 **Decoder:**
 ```
-Linear(feature_dims) → ConvTranspose 
-                    → BN → LeakyReLU 
-                    → ConvTranspose 
-                    → Output
+
+Linear(feature_dims) → ConvTranspose
+→ BN → LeakyReLU
+→ ConvTranspose
+→ Output
+
 ```
 
 #### 1.2.3 Loss Functions
@@ -572,42 +593,48 @@ Linear(feature_dims) → ConvTranspose
 The system implements multiple specialized loss functions:
 
 1. **Structural Loss:**
-   ```
-   L_struct = MSE(x,x̂) + λ₁‖∇x - ∇x̂‖₂ + λ₂TV(x̂)
-   ```
-   where `∇` is the Sobel gradient operator and `TV` is total variation.
+```
+
+L_struct = MSE(x,x̂) + λ₁‖∇x - ∇x̂‖₂ + λ₂TV(x̂)
+
+```
+where `∇` is the Sobel gradient operator and `TV` is total variation.
 
 2. **Color Enhancement Loss:**
-   ```
-   L_color = MSE(x,x̂) + λ₁‖Corr(x) - Corr(x̂)‖₂ + λ₂‖σ(x) - σ(x̂)‖₂
-   ```
-   where `Corr` computes channel correlations and `σ` is channel-wise standard deviation.
+```
+
+L_color = MSE(x,x̂) + λ₁‖Corr(x) - Corr(x̂)‖₂ + λ₂‖σ(x) - σ(x̂)‖₂
+
+```
+where `Corr` computes channel correlations and `σ` is channel-wise standard deviation.
 
 3. **Morphology Loss:**
-   ```
-   L_morph = MSE(x,x̂) + λ₁‖M(x) - M(x̂)‖₂ + λ₂(Sym_h(x̂) + Sym_v(x̂))
-   ```
-   where `M` computes moment statistics and `Sym_{h,v}` measure horizontal and vertical symmetry.
+```
+
+L_morph = MSE(x,x̂) + λ₁‖M(x) - M(x̂)‖₂ + λ₂(Sym_h(x̂) + Sym_v(x̂))
+
+````
+where `M` computes moment statistics and `Sym_{h,v}` measure horizontal and vertical symmetry.
 
 ### 1.3 Data Flow
 
 1. **Input Processing:**
-   - Image loading and preprocessing
-   - Resolution standardization
-   - Channel normalization
-   - Data augmentation (if enabled)
+- Image loading and preprocessing
+- Resolution standardization
+- Channel normalization
+- Data augmentation (if enabled)
 
 2. **Feature Extraction:**
-   - Forward pass through selected architecture
-   - Loss computation and backpropagation
-   - Feature vector generation
-   - Dimensionality reduction
+- Forward pass through selected architecture
+- Loss computation and backpropagation
+- Feature vector generation
+- Dimensionality reduction
 
 3. **Output Generation:**
-   - Feature vector serialization
-   - CSV file generation
-   - Configuration file creation
-   - Optional visualization generation
+- Feature vector serialization
+- CSV file generation
+- Configuration file creation
+- Optional visualization generation
 
 ### 1.4 Memory Management
 
@@ -625,59 +652,61 @@ The system implements several memory optimization techniques:
 
 #### Basic Parameters
 - **`encoder_type`:** CNN or Autoencoder selection
-  - **Effects:** Determines feature extraction approach
-  - **Values:** `"cnn"` or `"autoenc"`
+- **Effects:** Determines feature extraction approach
+- **Values:** `"cnn"` or `"autoenc"`
 
 - **`feature_dims`:** Output feature dimensionality
-  - **Effects:** Controls compression level
-  - **Range:** `32-1024` (recommended)
+- **Effects:** Controls compression level
+- **Range:** `32-1024` (recommended)
 
 #### Loss Function Parameters
 
 1. **Structural Loss:**
-   ```json
-   "structural": {
-       "enabled": true,
-       "weight": 0.7,
-       "params": {
-           "edge_weight": 1.0,
-           "smoothness_weight": 0.5
-       }
-   }
-   ```
+```json
+"structural": {
+    "enabled": true,
+    "weight": 0.7,
+    "params": {
+        "edge_weight": 1.0,
+        "smoothness_weight": 0.5
+    }
+}
+````
+
 ```
 The configuration sample for cdbnn
 ```
+
 ```json
 {
   "dataset": {
     "_comment": "Dataset configuration section",
     "name": "dataset_name",
-    "type": "custom",                    // Options: "torchvision" or "custom"
-    "in_channels": 3,                    // Number of input channels (3 for RGB, 1 for grayscale)
-    "input_size": [224, 224],           // Input image dimensions [height, width]
-    "num_classes": 10,                   // Number of classes in the dataset
-    "mean": [0.485, 0.456, 0.406],      // Normalization mean values
-    "std": [0.229, 0.224, 0.225],       // Normalization standard deviation values
-    "train_dir": "path/to/train",       // Training data directory
-    "test_dir": "path/to/test"          // Test data directory
+    "type": "custom", // Options: "torchvision" or "custom"
+    "in_channels": 3, // Number of input channels (3 for RGB, 1 for grayscale)
+    "input_size": [224, 224], // Input image dimensions [height, width]
+    "num_classes": 10, // Number of classes in the dataset
+    "mean": [0.485, 0.456, 0.406], // Normalization mean values
+    "std": [0.229, 0.224, 0.225], // Normalization standard deviation values
+    "train_dir": "path/to/train", // Training data directory
+    "test_dir": "path/to/test" // Test data directory
   },
 
   "model": {
     "_comment": "Model architecture and training configuration",
-    "encoder_type": "autoenc",          // Options: "cnn" or "autoenc"
-    "feature_dims": 128,                // Dimension of extracted features
-    "learning_rate": 0.001,             // Base learning rate
+    "encoder_type": "autoenc", // Options: "cnn" or "autoenc"
+    "feature_dims": 128, // Dimension of extracted features
+    "learning_rate": 0.001, // Base learning rate
 
     "architecture": {
       "_comment": "Enhanced architecture components configuration",
-      "use_global_convolution": true,   // Enable Global Convolution Network modules
-      "use_boundary_refinement": true,  // Enable Boundary Refinement modules
-      "gcn_kernel_size": 7,            // Kernel size for global convolution (odd numbers only)
+      "use_global_convolution": true, // Enable Global Convolution Network modules
+      "use_boundary_refinement": true, // Enable Boundary Refinement modules
+      "gcn_kernel_size": 7, // Kernel size for global convolution (odd numbers only)
       "feature_enhancement": {
-        "enabled": true,               // Enable feature enhancement blocks
-        "initial_channels": 32,        // Initial number of channels
-        "growth_rate": 32             // Channel growth rate in dense blocks
+        "enabled": true, // Enable feature enhancement blocks
+        "initial_channels": 32, // Initial number of channels
+        "growth_rate": 32 // Channel growth rate in dense blocks
       }
     },
 
@@ -688,9 +717,9 @@ The configuration sample for cdbnn
         "type": "PerceptualLoss",
         "weight": 1.0,
         "params": {
-          "l1_weight": 1.0,           // Weight for L1 loss component
-          "ms_ssim_weight": 1.0,      // Weight for MS-SSIM loss component
-          "edge_weight": 0.5          // Weight for edge-awareness loss component
+          "l1_weight": 1.0, // Weight for L1 loss component
+          "ms_ssim_weight": 1.0, // Weight for MS-SSIM loss component
+          "edge_weight": 0.5 // Weight for edge-awareness loss component
         }
       },
       "structural": {
@@ -698,9 +727,9 @@ The configuration sample for cdbnn
         "type": "StructuralLoss",
         "weight": 0.7,
         "params": {
-          "edge_weight": 1.0,         // Weight for edge detection loss
-          "smoothness_weight": 0.5,   // Weight for smoothness preservation
-          "boundary_weight": 0.3      // Weight for boundary enhancement
+          "edge_weight": 1.0, // Weight for edge detection loss
+          "smoothness_weight": 0.5, // Weight for smoothness preservation
+          "boundary_weight": 0.3 // Weight for boundary enhancement
         }
       },
       "color_enhancement": {
@@ -708,8 +737,8 @@ The configuration sample for cdbnn
         "type": "ColorEnhancementLoss",
         "weight": 0.5,
         "params": {
-          "channel_weight": 0.5,      // Weight for channel correlation
-          "contrast_weight": 0.3      // Weight for contrast preservation
+          "channel_weight": 0.5, // Weight for channel correlation
+          "contrast_weight": 0.3 // Weight for contrast preservation
         }
       },
       "morphology": {
@@ -717,43 +746,43 @@ The configuration sample for cdbnn
         "type": "MorphologyLoss",
         "weight": 0.3,
         "params": {
-          "shape_weight": 0.7,        // Weight for shape preservation
-          "symmetry_weight": 0.3      // Weight for symmetry preservation
+          "shape_weight": 0.7, // Weight for shape preservation
+          "symmetry_weight": 0.3 // Weight for symmetry preservation
         }
       }
     },
 
     "optimizer": {
       "_comment": "Optimizer configuration",
-      "type": "Adam",                 // Options: "Adam", "SGD"
-      "weight_decay": 1e-4,           // L2 regularization factor
-      "momentum": 0.9,                // Momentum for SGD
-      "beta1": 0.9,                   // Adam beta1 parameter
-      "beta2": 0.999,                 // Adam beta2 parameter
-      "epsilon": 1e-8                 // Adam epsilon parameter
+      "type": "Adam", // Options: "Adam", "SGD"
+      "weight_decay": 1e-4, // L2 regularization factor
+      "momentum": 0.9, // Momentum for SGD
+      "beta1": 0.9, // Adam beta1 parameter
+      "beta2": 0.999, // Adam beta2 parameter
+      "epsilon": 1e-8 // Adam epsilon parameter
     },
 
     "scheduler": {
       "_comment": "Learning rate scheduler configuration",
-      "type": "ReduceLROnPlateau",    // Options: "StepLR", "ReduceLROnPlateau", "CosineAnnealingLR"
-      "factor": 0.1,                  // Factor to reduce learning rate
-      "patience": 10,                 // Epochs to wait before reducing LR
-      "min_lr": 1e-6,                // Minimum learning rate
-      "verbose": true                 // Print learning rate updates
+      "type": "ReduceLROnPlateau", // Options: "StepLR", "ReduceLROnPlateau", "CosineAnnealingLR"
+      "factor": 0.1, // Factor to reduce learning rate
+      "patience": 10, // Epochs to wait before reducing LR
+      "min_lr": 1e-6, // Minimum learning rate
+      "verbose": true // Print learning rate updates
     }
   },
 
   "training": {
     "_comment": "Training process configuration",
-    "batch_size": 32,                // Batch size for training
-    "epochs": 20,                    // Number of training epochs
-    "num_workers": 4,                // Number of data loading workers
+    "batch_size": 32, // Batch size for training
+    "epochs": 20, // Number of training epochs
+    "num_workers": 4, // Number of data loading workers
     "checkpoint_dir": "checkpoints", // Directory to save checkpoints
-    "validation_split": 0.2,         // Fraction of data used for validation
+    "validation_split": 0.2, // Fraction of data used for validation
 
     "early_stopping": {
-      "patience": 5,                 // Epochs to wait before early stopping
-      "min_delta": 0.001            // Minimum improvement required
+      "patience": 5, // Epochs to wait before early stopping
+      "min_delta": 0.001 // Minimum improvement required
     },
 
     "loss_weights": {
@@ -798,24 +827,25 @@ The configuration sample for cdbnn
 
   "execution_flags": {
     "_comment": "Execution control flags",
-    "mode": "train_and_predict",     // Options: "train_only", "predict_only", "train_and_predict"
-    "use_gpu": true,                 // Use GPU if available
-    "mixed_precision": true,         // Use mixed precision training
-    "distributed_training": false,   // Enable distributed training
-    "debug_mode": false,            // Enable debug logging
-    "use_previous_model": true,     // Load previous checkpoint if available
-    "fresh_start": false           // Ignore existing checkpoints
+    "mode": "train_and_predict", // Options: "train_only", "predict_only", "train_and_predict"
+    "use_gpu": true, // Use GPU if available
+    "mixed_precision": true, // Use mixed precision training
+    "distributed_training": false, // Enable distributed training
+    "debug_mode": false, // Enable debug logging
+    "use_previous_model": true, // Load previous checkpoint if available
+    "fresh_start": false // Ignore existing checkpoints
   },
 
   "logging": {
     "_comment": "Logging configuration",
-    "log_dir": "logs",             // Directory for log files
+    "log_dir": "logs", // Directory for log files
     "tensorboard": {
       "enabled": true,
-      "log_dir": "runs"           // Directory for tensorboard logs
+      "log_dir": "runs" // Directory for tensorboard logs
     },
-    "save_frequency": 5,           // Save checkpoint every N epochs
-    "metrics": [                   // Metrics to track
+    "save_frequency": 5, // Save checkpoint every N epochs
+    "metrics": [
+      // Metrics to track
       "loss",
       "accuracy",
       "reconstruction_error"
@@ -824,16 +854,18 @@ The configuration sample for cdbnn
 
   "output": {
     "_comment": "Output configuration",
-    "features_file": "features.csv",  // Path to save extracted features
-    "model_dir": "models",           // Directory to save trained models
-    "visualization_dir": "viz"       // Directory for visualizations
+    "features_file": "features.csv", // Path to save extracted features
+    "model_dir": "models", // Directory to save trained models
+    "visualization_dir": "viz" // Directory for visualizations
   }
 }
 ```
-   - **`edge_weight`:** Controls edge detection sensitivity
-   - **`smoothness_weight`:** Balances region continuity
+
+- **`edge_weight`:** Controls edge detection sensitivity
+- **`smoothness_weight`:** Balances region continuity
 
 2. **Color Enhancement:**
+
    ```json
    "color_enhancement": {
        "enabled": true,
@@ -844,6 +876,7 @@ The configuration sample for cdbnn
        }
    }
    ```
+
    - **`channel_weight`:** Controls channel correlation importance
    - **`contrast_weight`:** Adjusts color contrast preservation
 
@@ -864,6 +897,7 @@ The configuration sample for cdbnn
 ### 2.2 Training Parameters
 
 #### Basic Training
+
 ```json
 "training_params": {
     "batch_size": 32,
@@ -872,12 +906,14 @@ The configuration sample for cdbnn
     "test_fraction": 0.2
 }
 ```
+
 - **Effects on training:**
   - Larger `batch_size`: Faster training, more memory usage
   - Higher `learning_rate`: Faster convergence but potential instability
   - More `epochs`: Better accuracy but longer training time
 
 #### Advanced Parameters
+
 ```json
 "training_params": {
     "minimum_training_accuracy": 0.95,
@@ -886,6 +922,7 @@ The configuration sample for cdbnn
     "enable_adaptive": true
 }
 ```
+
 - **Effects on model behavior:**
   - `minimum_training_accuracy`: Controls early stopping
   - `cardinality_threshold`: Affects feature discretization
@@ -902,6 +939,7 @@ The configuration sample for cdbnn
     "use_previous_model": true
 }
 ```
+
 - **Controls workflow:**
   - `train_only`: Training without prediction
   - `fresh_start`: Ignores previous checkpoints
@@ -910,12 +948,14 @@ The configuration sample for cdbnn
 ### 2.4 Performance Optimization
 
 1. **Memory Management:**
+
    ```json
    "training": {
        "batch_size": 32,
        "num_workers": 4
    }
    ```
+
    - Adjust based on available system resources
    - Larger values improve speed but increase memory usage
 
@@ -938,8 +978,10 @@ The configuration sample for cdbnn
     "visualization_dir": "path/to/viz"
 }
 ```
+
 - Controls output organization
 - Enables selective saving of models and visualizations
+
 ```
 
 

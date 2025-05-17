@@ -34,7 +34,7 @@ case $mode in
     python adbnn.py --file_path "data/${data_name}/${data_name}.csv" --mode train --model_type "$model"
     ;;&  # Continue to next case (executes predict if mode is "all")
   "predict" | "all" | "fresh")
-    echo "Running prediction..." 
+    echo "Running prediction..."
     python cdbnn1.py --mode predict --data_name "$data_name" --input_path "$input_path" #--encoder_type "$encoder_type"
     python adbnn.py --file_path "data/${data_name}/${data_name}.csv" --mode predict --model_type "$model"
     ;;

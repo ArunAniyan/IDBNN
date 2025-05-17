@@ -1,13 +1,19 @@
 import os
-import cv2
-import numpy as np
-import pandas as pd
-from PIL import Image, ImageDraw, ImageFont
-from matplotlib import pyplot as plt
 
-def create_prediction_mosaic(image_dir, csv_path, output_path,
-                           mosaic_size=(2000, 2000), tile_size=(200, 200),
-                           font_size=16, max_images=100):
+import pandas as pd
+from matplotlib import pyplot as plt
+from PIL import Image, ImageDraw, ImageFont
+
+
+def create_prediction_mosaic(
+    image_dir,
+    csv_path,
+    output_path,
+    mosaic_size=(2000, 2000),
+    tile_size=(200, 200),
+    font_size=16,
+    max_images=100,
+):
     """
     Create a visual mosaic of predictions sorted by confidence.
 
@@ -22,7 +28,7 @@ def create_prediction_mosaic(image_dir, csv_path, output_path,
     """
     # Load predictions and sort by confidence
     df = pd.read_csv(csv_path)
-    df = df.sort_values('max_probability', ascending=False)
+    df = df.sort_values("max_probability", ascending=False)
 
     # Limit number of images
     if len(df) > max_images:
@@ -33,7 +39,7 @@ def create_prediction_mosaic(image_dir, csv_path, output_path,
     rows = mosaic_size[1] // tile_size[1]
 
     # Create blank mosaic canvas
-    mosaic = Image.new('RGB', mosaic_size, color=(240, 240, 240))
+    mosaic = Image.new("RGB", mosaic_size, color=(240, 240, 240))
     draw = ImageDraw.Draw(mosaic)
 
     try:
@@ -52,19 +58,19 @@ def create_prediction_mosaic(image_dir, csv_path, output_path,
 
         try:
             # Load and resize image
-            img_path = os.path.join(image_dir, row['image_name'])
-            img = Image.open(img_path).convert('RGB')
+            img_path = os.path.join(image_dir, row["image_name"])
+            img = Image.open(img_path).convert("RGB")
             img = img.resize(tile_size)
 
             # Draw border color based on correctness
-            true_class = row.get('true_class', None)
-            pred_class = row['predicted_class']
+            true_class = row.get("true_class", None)
+            pred_class = row["predicted_class"]
             border_color = (0, 255, 0) if true_class == pred_class else (255, 0, 0)
 
             # Add border
-            bordered_img = Image.new('RGB',
-                                   (tile_size[0]+4, tile_size[1]+4),
-                                   border_color)
+            bordered_img = Image.new(
+                "RGB", (tile_size[0] + 4, tile_size[1] + 4), border_color
+            )
             bordered_img.paste(img, (2, 2))
 
             # Add to mosaic
@@ -76,8 +82,10 @@ def create_prediction_mosaic(image_dir, csv_path, output_path,
 
             # Draw text with background for readability
             text_size = draw.textsize(text, font=font)
-            draw.rectangle([x, text_y, x+text_size[0], text_y+text_size[1]],
-                          fill=(255, 255, 255))
+            draw.rectangle(
+                [x, text_y, x + text_size[0], text_y + text_size[1]],
+                fill=(255, 255, 255),
+            )
             draw.text((x, text_y), text, font=font, fill=(0, 0, 0))
 
         except Exception as e:
@@ -85,12 +93,13 @@ def create_prediction_mosaic(image_dir, csv_path, output_path,
             continue
 
     # Add header with summary statistics
-    header = f"Prediction Mosaic (Sorted by Confidence) | " \
-             f"Total: {len(df)} | " \
-             f"Avg Confidence: {df['max_probability'].mean():.2f}"
+    header = (
+        f"Prediction Mosaic (Sorted by Confidence) | "
+        f"Total: {len(df)} | "
+        f"Avg Confidence: {df['max_probability'].mean():.2f}"
+    )
     header_size = draw.textsize(header, font=font)
-    draw.rectangle([0, 0, mosaic_size[0], header_size[1]+10],
-                  fill=(200, 200, 255))
+    draw.rectangle([0, 0, mosaic_size[0], header_size[1] + 10], fill=(200, 200, 255))
     draw.text((10, 5), header, font=font, fill=(0, 0, 0))
 
     # Save final mosaic
@@ -99,11 +108,11 @@ def create_prediction_mosaic(image_dir, csv_path, output_path,
 
     # Create and save confidence histogram
     plt.figure(figsize=(10, 6))
-    plt.hist(df['max_probability'], bins=20, color='skyblue', edgecolor='black')
-    plt.title('Prediction Confidence Distribution')
-    plt.xlabel('Confidence Score')
-    plt.ylabel('Number of Images')
-    hist_path = os.path.splitext(output_path)[0] + '_histogram.png'
+    plt.hist(df["max_probability"], bins=20, color="skyblue", edgecolor="black")
+    plt.title("Prediction Confidence Distribution")
+    plt.xlabel("Confidence Score")
+    plt.ylabel("Number of Images")
+    hist_path = os.path.splitext(output_path)[0] + "_histogram.png"
     plt.savefig(hist_path)
     plt.close()
     print(f"Confidence histogram saved to {hist_path}")

@@ -1,11 +1,15 @@
 import argparse
+
 import torch
-from object_detector import ObjectDetector
+
 from data_utils import get_dataloaders
+from object_detector import ObjectDetector
 from train import ObjectDetectorTrainer
+
 
 class DynamicCNN(torch.nn.Module):
     """Example backbone network"""
+
     def __init__(self, in_channels=3, num_classes=10):
         super().__init__()
         self.features = torch.nn.Sequential(
@@ -43,39 +47,55 @@ class DynamicCNN(torch.nn.Module):
         x = self.classifier(x)
         return x
 
+
 def main():
-    parser = argparse.ArgumentParser(description='Train Object Detector')
-    parser.add_argument('--data-dir', type=str, required=True, help='Path to dataset directory')
-    parser.add_argument('--batch-size', type=int, default=4, help='Batch size for training')
-    parser.add_argument('--epochs', type=int, default=10, help='Number of epochs to train')
-    parser.add_argument('--num-classes', type=int, required=True, help='Number of object classes')
-    parser.add_argument('--output-dir', type=str, default='checkpoints', help='Directory to save checkpoints')
-    parser.add_argument('--device', type=str, default='cuda' if torch.cuda.is_available() else 'cpu',
-                       help='Device to train on')
+    parser = argparse.ArgumentParser(description="Train Object Detector")
+    parser.add_argument(
+        "--data-dir", type=str, required=True, help="Path to dataset directory"
+    )
+    parser.add_argument(
+        "--batch-size", type=int, default=4, help="Batch size for training"
+    )
+    parser.add_argument(
+        "--epochs", type=int, default=10, help="Number of epochs to train"
+    )
+    parser.add_argument(
+        "--num-classes", type=int, required=True, help="Number of object classes"
+    )
+    parser.add_argument(
+        "--output-dir",
+        type=str,
+        default="checkpoints",
+        help="Directory to save checkpoints",
+    )
+    parser.add_argument(
+        "--device",
+        type=str,
+        default="cuda" if torch.cuda.is_available() else "cpu",
+        help="Device to train on",
+    )
     args = parser.parse_args()
 
     # Create model
     backbone = DynamicCNN(in_channels=3, num_classes=args.num_classes)
     model = ObjectDetector(backbone, num_classes=args.num_classes)
-    
+
     # Create dataloaders
-    dataloaders = get_dataloaders(
-        root_dir=args.data_dir,
-        batch_size=args.batch_size
-    )
-    
+    dataloaders = get_dataloaders(root_dir=args.data_dir, batch_size=args.batch_size)
+
     # Create trainer
     trainer = ObjectDetectorTrainer(
         model=model,
-        train_loader=dataloaders['train'],
-        val_loader=dataloaders['val'],
+        train_loader=dataloaders["train"],
+        val_loader=dataloaders["val"],
         device=args.device,
         num_classes=args.num_classes,
-        output_dir=args.output_dir
+        output_dir=args.output_dir,
     )
-    
+
     # Train the model
     trainer.train(num_epochs=args.epochs)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

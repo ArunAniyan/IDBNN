@@ -1,962 +1,970 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-<style>
-.image-pair { display: inline-block; margin: 10px; text-align: center; }
-.image-pair img { width: 128px; height: 128px; margin: 5px; }
-</style>
-</head>
-<body>
-<h1>Training Reconstructions - Epoch 2</h1>
-<div class="image-pair">
-<p>batch_0_sample_0</p>
-<img src="batch_0_sample_0_original.png" alt="Original">
-<img src="batch_0_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_0_sample_1</p>
-<img src="batch_0_sample_1_original.png" alt="Original">
-<img src="batch_0_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_0_sample_2</p>
-<img src="batch_0_sample_2_original.png" alt="Original">
-<img src="batch_0_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_0_sample_3</p>
-<img src="batch_0_sample_3_original.png" alt="Original">
-<img src="batch_0_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_0_sample_4</p>
-<img src="batch_0_sample_4_original.png" alt="Original">
-<img src="batch_0_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1000_sample_0</p>
-<img src="batch_1000_sample_0_original.png" alt="Original">
-<img src="batch_1000_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1000_sample_1</p>
-<img src="batch_1000_sample_1_original.png" alt="Original">
-<img src="batch_1000_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1000_sample_2</p>
-<img src="batch_1000_sample_2_original.png" alt="Original">
-<img src="batch_1000_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1000_sample_3</p>
-<img src="batch_1000_sample_3_original.png" alt="Original">
-<img src="batch_1000_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1000_sample_4</p>
-<img src="batch_1000_sample_4_original.png" alt="Original">
-<img src="batch_1000_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_100_sample_0</p>
-<img src="batch_100_sample_0_original.png" alt="Original">
-<img src="batch_100_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_100_sample_1</p>
-<img src="batch_100_sample_1_original.png" alt="Original">
-<img src="batch_100_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_100_sample_2</p>
-<img src="batch_100_sample_2_original.png" alt="Original">
-<img src="batch_100_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_100_sample_3</p>
-<img src="batch_100_sample_3_original.png" alt="Original">
-<img src="batch_100_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_100_sample_4</p>
-<img src="batch_100_sample_4_original.png" alt="Original">
-<img src="batch_100_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1050_sample_0</p>
-<img src="batch_1050_sample_0_original.png" alt="Original">
-<img src="batch_1050_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1050_sample_1</p>
-<img src="batch_1050_sample_1_original.png" alt="Original">
-<img src="batch_1050_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1050_sample_2</p>
-<img src="batch_1050_sample_2_original.png" alt="Original">
-<img src="batch_1050_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1050_sample_3</p>
-<img src="batch_1050_sample_3_original.png" alt="Original">
-<img src="batch_1050_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1050_sample_4</p>
-<img src="batch_1050_sample_4_original.png" alt="Original">
-<img src="batch_1050_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1100_sample_0</p>
-<img src="batch_1100_sample_0_original.png" alt="Original">
-<img src="batch_1100_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1100_sample_1</p>
-<img src="batch_1100_sample_1_original.png" alt="Original">
-<img src="batch_1100_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1100_sample_2</p>
-<img src="batch_1100_sample_2_original.png" alt="Original">
-<img src="batch_1100_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1100_sample_3</p>
-<img src="batch_1100_sample_3_original.png" alt="Original">
-<img src="batch_1100_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1100_sample_4</p>
-<img src="batch_1100_sample_4_original.png" alt="Original">
-<img src="batch_1100_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1150_sample_0</p>
-<img src="batch_1150_sample_0_original.png" alt="Original">
-<img src="batch_1150_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1150_sample_1</p>
-<img src="batch_1150_sample_1_original.png" alt="Original">
-<img src="batch_1150_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1150_sample_2</p>
-<img src="batch_1150_sample_2_original.png" alt="Original">
-<img src="batch_1150_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1150_sample_3</p>
-<img src="batch_1150_sample_3_original.png" alt="Original">
-<img src="batch_1150_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1150_sample_4</p>
-<img src="batch_1150_sample_4_original.png" alt="Original">
-<img src="batch_1150_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1200_sample_0</p>
-<img src="batch_1200_sample_0_original.png" alt="Original">
-<img src="batch_1200_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1200_sample_1</p>
-<img src="batch_1200_sample_1_original.png" alt="Original">
-<img src="batch_1200_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1200_sample_2</p>
-<img src="batch_1200_sample_2_original.png" alt="Original">
-<img src="batch_1200_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1200_sample_3</p>
-<img src="batch_1200_sample_3_original.png" alt="Original">
-<img src="batch_1200_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1200_sample_4</p>
-<img src="batch_1200_sample_4_original.png" alt="Original">
-<img src="batch_1200_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1250_sample_0</p>
-<img src="batch_1250_sample_0_original.png" alt="Original">
-<img src="batch_1250_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1250_sample_1</p>
-<img src="batch_1250_sample_1_original.png" alt="Original">
-<img src="batch_1250_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1250_sample_2</p>
-<img src="batch_1250_sample_2_original.png" alt="Original">
-<img src="batch_1250_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1250_sample_3</p>
-<img src="batch_1250_sample_3_original.png" alt="Original">
-<img src="batch_1250_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1250_sample_4</p>
-<img src="batch_1250_sample_4_original.png" alt="Original">
-<img src="batch_1250_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1300_sample_0</p>
-<img src="batch_1300_sample_0_original.png" alt="Original">
-<img src="batch_1300_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1300_sample_1</p>
-<img src="batch_1300_sample_1_original.png" alt="Original">
-<img src="batch_1300_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1300_sample_2</p>
-<img src="batch_1300_sample_2_original.png" alt="Original">
-<img src="batch_1300_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1300_sample_3</p>
-<img src="batch_1300_sample_3_original.png" alt="Original">
-<img src="batch_1300_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1300_sample_4</p>
-<img src="batch_1300_sample_4_original.png" alt="Original">
-<img src="batch_1300_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1350_sample_0</p>
-<img src="batch_1350_sample_0_original.png" alt="Original">
-<img src="batch_1350_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1350_sample_1</p>
-<img src="batch_1350_sample_1_original.png" alt="Original">
-<img src="batch_1350_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1350_sample_2</p>
-<img src="batch_1350_sample_2_original.png" alt="Original">
-<img src="batch_1350_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1350_sample_3</p>
-<img src="batch_1350_sample_3_original.png" alt="Original">
-<img src="batch_1350_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1350_sample_4</p>
-<img src="batch_1350_sample_4_original.png" alt="Original">
-<img src="batch_1350_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1400_sample_0</p>
-<img src="batch_1400_sample_0_original.png" alt="Original">
-<img src="batch_1400_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1400_sample_1</p>
-<img src="batch_1400_sample_1_original.png" alt="Original">
-<img src="batch_1400_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1400_sample_2</p>
-<img src="batch_1400_sample_2_original.png" alt="Original">
-<img src="batch_1400_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1400_sample_3</p>
-<img src="batch_1400_sample_3_original.png" alt="Original">
-<img src="batch_1400_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1400_sample_4</p>
-<img src="batch_1400_sample_4_original.png" alt="Original">
-<img src="batch_1400_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1450_sample_0</p>
-<img src="batch_1450_sample_0_original.png" alt="Original">
-<img src="batch_1450_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1450_sample_1</p>
-<img src="batch_1450_sample_1_original.png" alt="Original">
-<img src="batch_1450_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1450_sample_2</p>
-<img src="batch_1450_sample_2_original.png" alt="Original">
-<img src="batch_1450_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1450_sample_3</p>
-<img src="batch_1450_sample_3_original.png" alt="Original">
-<img src="batch_1450_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1450_sample_4</p>
-<img src="batch_1450_sample_4_original.png" alt="Original">
-<img src="batch_1450_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1500_sample_0</p>
-<img src="batch_1500_sample_0_original.png" alt="Original">
-<img src="batch_1500_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1500_sample_1</p>
-<img src="batch_1500_sample_1_original.png" alt="Original">
-<img src="batch_1500_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1500_sample_2</p>
-<img src="batch_1500_sample_2_original.png" alt="Original">
-<img src="batch_1500_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1500_sample_3</p>
-<img src="batch_1500_sample_3_original.png" alt="Original">
-<img src="batch_1500_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1500_sample_4</p>
-<img src="batch_1500_sample_4_original.png" alt="Original">
-<img src="batch_1500_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_150_sample_0</p>
-<img src="batch_150_sample_0_original.png" alt="Original">
-<img src="batch_150_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_150_sample_1</p>
-<img src="batch_150_sample_1_original.png" alt="Original">
-<img src="batch_150_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_150_sample_2</p>
-<img src="batch_150_sample_2_original.png" alt="Original">
-<img src="batch_150_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_150_sample_3</p>
-<img src="batch_150_sample_3_original.png" alt="Original">
-<img src="batch_150_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_150_sample_4</p>
-<img src="batch_150_sample_4_original.png" alt="Original">
-<img src="batch_150_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1550_sample_0</p>
-<img src="batch_1550_sample_0_original.png" alt="Original">
-<img src="batch_1550_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1550_sample_1</p>
-<img src="batch_1550_sample_1_original.png" alt="Original">
-<img src="batch_1550_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1550_sample_2</p>
-<img src="batch_1550_sample_2_original.png" alt="Original">
-<img src="batch_1550_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1550_sample_3</p>
-<img src="batch_1550_sample_3_original.png" alt="Original">
-<img src="batch_1550_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1550_sample_4</p>
-<img src="batch_1550_sample_4_original.png" alt="Original">
-<img src="batch_1550_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1600_sample_0</p>
-<img src="batch_1600_sample_0_original.png" alt="Original">
-<img src="batch_1600_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1600_sample_1</p>
-<img src="batch_1600_sample_1_original.png" alt="Original">
-<img src="batch_1600_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1600_sample_2</p>
-<img src="batch_1600_sample_2_original.png" alt="Original">
-<img src="batch_1600_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1600_sample_3</p>
-<img src="batch_1600_sample_3_original.png" alt="Original">
-<img src="batch_1600_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1600_sample_4</p>
-<img src="batch_1600_sample_4_original.png" alt="Original">
-<img src="batch_1600_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1650_sample_0</p>
-<img src="batch_1650_sample_0_original.png" alt="Original">
-<img src="batch_1650_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1650_sample_1</p>
-<img src="batch_1650_sample_1_original.png" alt="Original">
-<img src="batch_1650_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1650_sample_2</p>
-<img src="batch_1650_sample_2_original.png" alt="Original">
-<img src="batch_1650_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1650_sample_3</p>
-<img src="batch_1650_sample_3_original.png" alt="Original">
-<img src="batch_1650_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1650_sample_4</p>
-<img src="batch_1650_sample_4_original.png" alt="Original">
-<img src="batch_1650_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1700_sample_0</p>
-<img src="batch_1700_sample_0_original.png" alt="Original">
-<img src="batch_1700_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1700_sample_1</p>
-<img src="batch_1700_sample_1_original.png" alt="Original">
-<img src="batch_1700_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1700_sample_2</p>
-<img src="batch_1700_sample_2_original.png" alt="Original">
-<img src="batch_1700_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1700_sample_3</p>
-<img src="batch_1700_sample_3_original.png" alt="Original">
-<img src="batch_1700_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1700_sample_4</p>
-<img src="batch_1700_sample_4_original.png" alt="Original">
-<img src="batch_1700_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1750_sample_0</p>
-<img src="batch_1750_sample_0_original.png" alt="Original">
-<img src="batch_1750_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1750_sample_1</p>
-<img src="batch_1750_sample_1_original.png" alt="Original">
-<img src="batch_1750_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1750_sample_2</p>
-<img src="batch_1750_sample_2_original.png" alt="Original">
-<img src="batch_1750_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1750_sample_3</p>
-<img src="batch_1750_sample_3_original.png" alt="Original">
-<img src="batch_1750_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1750_sample_4</p>
-<img src="batch_1750_sample_4_original.png" alt="Original">
-<img src="batch_1750_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1800_sample_0</p>
-<img src="batch_1800_sample_0_original.png" alt="Original">
-<img src="batch_1800_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1800_sample_1</p>
-<img src="batch_1800_sample_1_original.png" alt="Original">
-<img src="batch_1800_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1800_sample_2</p>
-<img src="batch_1800_sample_2_original.png" alt="Original">
-<img src="batch_1800_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1800_sample_3</p>
-<img src="batch_1800_sample_3_original.png" alt="Original">
-<img src="batch_1800_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1800_sample_4</p>
-<img src="batch_1800_sample_4_original.png" alt="Original">
-<img src="batch_1800_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1850_sample_0</p>
-<img src="batch_1850_sample_0_original.png" alt="Original">
-<img src="batch_1850_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1850_sample_1</p>
-<img src="batch_1850_sample_1_original.png" alt="Original">
-<img src="batch_1850_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1850_sample_2</p>
-<img src="batch_1850_sample_2_original.png" alt="Original">
-<img src="batch_1850_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1850_sample_3</p>
-<img src="batch_1850_sample_3_original.png" alt="Original">
-<img src="batch_1850_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_1850_sample_4</p>
-<img src="batch_1850_sample_4_original.png" alt="Original">
-<img src="batch_1850_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_200_sample_0</p>
-<img src="batch_200_sample_0_original.png" alt="Original">
-<img src="batch_200_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_200_sample_1</p>
-<img src="batch_200_sample_1_original.png" alt="Original">
-<img src="batch_200_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_200_sample_2</p>
-<img src="batch_200_sample_2_original.png" alt="Original">
-<img src="batch_200_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_200_sample_3</p>
-<img src="batch_200_sample_3_original.png" alt="Original">
-<img src="batch_200_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_200_sample_4</p>
-<img src="batch_200_sample_4_original.png" alt="Original">
-<img src="batch_200_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_250_sample_0</p>
-<img src="batch_250_sample_0_original.png" alt="Original">
-<img src="batch_250_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_250_sample_1</p>
-<img src="batch_250_sample_1_original.png" alt="Original">
-<img src="batch_250_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_250_sample_2</p>
-<img src="batch_250_sample_2_original.png" alt="Original">
-<img src="batch_250_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_250_sample_3</p>
-<img src="batch_250_sample_3_original.png" alt="Original">
-<img src="batch_250_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_250_sample_4</p>
-<img src="batch_250_sample_4_original.png" alt="Original">
-<img src="batch_250_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_300_sample_0</p>
-<img src="batch_300_sample_0_original.png" alt="Original">
-<img src="batch_300_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_300_sample_1</p>
-<img src="batch_300_sample_1_original.png" alt="Original">
-<img src="batch_300_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_300_sample_2</p>
-<img src="batch_300_sample_2_original.png" alt="Original">
-<img src="batch_300_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_300_sample_3</p>
-<img src="batch_300_sample_3_original.png" alt="Original">
-<img src="batch_300_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_300_sample_4</p>
-<img src="batch_300_sample_4_original.png" alt="Original">
-<img src="batch_300_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_350_sample_0</p>
-<img src="batch_350_sample_0_original.png" alt="Original">
-<img src="batch_350_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_350_sample_1</p>
-<img src="batch_350_sample_1_original.png" alt="Original">
-<img src="batch_350_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_350_sample_2</p>
-<img src="batch_350_sample_2_original.png" alt="Original">
-<img src="batch_350_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_350_sample_3</p>
-<img src="batch_350_sample_3_original.png" alt="Original">
-<img src="batch_350_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_350_sample_4</p>
-<img src="batch_350_sample_4_original.png" alt="Original">
-<img src="batch_350_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_400_sample_0</p>
-<img src="batch_400_sample_0_original.png" alt="Original">
-<img src="batch_400_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_400_sample_1</p>
-<img src="batch_400_sample_1_original.png" alt="Original">
-<img src="batch_400_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_400_sample_2</p>
-<img src="batch_400_sample_2_original.png" alt="Original">
-<img src="batch_400_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_400_sample_3</p>
-<img src="batch_400_sample_3_original.png" alt="Original">
-<img src="batch_400_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_400_sample_4</p>
-<img src="batch_400_sample_4_original.png" alt="Original">
-<img src="batch_400_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_450_sample_0</p>
-<img src="batch_450_sample_0_original.png" alt="Original">
-<img src="batch_450_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_450_sample_1</p>
-<img src="batch_450_sample_1_original.png" alt="Original">
-<img src="batch_450_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_450_sample_2</p>
-<img src="batch_450_sample_2_original.png" alt="Original">
-<img src="batch_450_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_450_sample_3</p>
-<img src="batch_450_sample_3_original.png" alt="Original">
-<img src="batch_450_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_450_sample_4</p>
-<img src="batch_450_sample_4_original.png" alt="Original">
-<img src="batch_450_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_500_sample_0</p>
-<img src="batch_500_sample_0_original.png" alt="Original">
-<img src="batch_500_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_500_sample_1</p>
-<img src="batch_500_sample_1_original.png" alt="Original">
-<img src="batch_500_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_500_sample_2</p>
-<img src="batch_500_sample_2_original.png" alt="Original">
-<img src="batch_500_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_500_sample_3</p>
-<img src="batch_500_sample_3_original.png" alt="Original">
-<img src="batch_500_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_500_sample_4</p>
-<img src="batch_500_sample_4_original.png" alt="Original">
-<img src="batch_500_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_50_sample_0</p>
-<img src="batch_50_sample_0_original.png" alt="Original">
-<img src="batch_50_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_50_sample_1</p>
-<img src="batch_50_sample_1_original.png" alt="Original">
-<img src="batch_50_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_50_sample_2</p>
-<img src="batch_50_sample_2_original.png" alt="Original">
-<img src="batch_50_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_50_sample_3</p>
-<img src="batch_50_sample_3_original.png" alt="Original">
-<img src="batch_50_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_50_sample_4</p>
-<img src="batch_50_sample_4_original.png" alt="Original">
-<img src="batch_50_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_550_sample_0</p>
-<img src="batch_550_sample_0_original.png" alt="Original">
-<img src="batch_550_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_550_sample_1</p>
-<img src="batch_550_sample_1_original.png" alt="Original">
-<img src="batch_550_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_550_sample_2</p>
-<img src="batch_550_sample_2_original.png" alt="Original">
-<img src="batch_550_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_550_sample_3</p>
-<img src="batch_550_sample_3_original.png" alt="Original">
-<img src="batch_550_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_550_sample_4</p>
-<img src="batch_550_sample_4_original.png" alt="Original">
-<img src="batch_550_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_600_sample_0</p>
-<img src="batch_600_sample_0_original.png" alt="Original">
-<img src="batch_600_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_600_sample_1</p>
-<img src="batch_600_sample_1_original.png" alt="Original">
-<img src="batch_600_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_600_sample_2</p>
-<img src="batch_600_sample_2_original.png" alt="Original">
-<img src="batch_600_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_600_sample_3</p>
-<img src="batch_600_sample_3_original.png" alt="Original">
-<img src="batch_600_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_600_sample_4</p>
-<img src="batch_600_sample_4_original.png" alt="Original">
-<img src="batch_600_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_650_sample_0</p>
-<img src="batch_650_sample_0_original.png" alt="Original">
-<img src="batch_650_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_650_sample_1</p>
-<img src="batch_650_sample_1_original.png" alt="Original">
-<img src="batch_650_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_650_sample_2</p>
-<img src="batch_650_sample_2_original.png" alt="Original">
-<img src="batch_650_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_650_sample_3</p>
-<img src="batch_650_sample_3_original.png" alt="Original">
-<img src="batch_650_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_650_sample_4</p>
-<img src="batch_650_sample_4_original.png" alt="Original">
-<img src="batch_650_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_700_sample_0</p>
-<img src="batch_700_sample_0_original.png" alt="Original">
-<img src="batch_700_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_700_sample_1</p>
-<img src="batch_700_sample_1_original.png" alt="Original">
-<img src="batch_700_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_700_sample_2</p>
-<img src="batch_700_sample_2_original.png" alt="Original">
-<img src="batch_700_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_700_sample_3</p>
-<img src="batch_700_sample_3_original.png" alt="Original">
-<img src="batch_700_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_700_sample_4</p>
-<img src="batch_700_sample_4_original.png" alt="Original">
-<img src="batch_700_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_750_sample_0</p>
-<img src="batch_750_sample_0_original.png" alt="Original">
-<img src="batch_750_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_750_sample_1</p>
-<img src="batch_750_sample_1_original.png" alt="Original">
-<img src="batch_750_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_750_sample_2</p>
-<img src="batch_750_sample_2_original.png" alt="Original">
-<img src="batch_750_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_750_sample_3</p>
-<img src="batch_750_sample_3_original.png" alt="Original">
-<img src="batch_750_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_750_sample_4</p>
-<img src="batch_750_sample_4_original.png" alt="Original">
-<img src="batch_750_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_800_sample_0</p>
-<img src="batch_800_sample_0_original.png" alt="Original">
-<img src="batch_800_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_800_sample_1</p>
-<img src="batch_800_sample_1_original.png" alt="Original">
-<img src="batch_800_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_800_sample_2</p>
-<img src="batch_800_sample_2_original.png" alt="Original">
-<img src="batch_800_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_800_sample_3</p>
-<img src="batch_800_sample_3_original.png" alt="Original">
-<img src="batch_800_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_800_sample_4</p>
-<img src="batch_800_sample_4_original.png" alt="Original">
-<img src="batch_800_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_850_sample_0</p>
-<img src="batch_850_sample_0_original.png" alt="Original">
-<img src="batch_850_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_850_sample_1</p>
-<img src="batch_850_sample_1_original.png" alt="Original">
-<img src="batch_850_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_850_sample_2</p>
-<img src="batch_850_sample_2_original.png" alt="Original">
-<img src="batch_850_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_850_sample_3</p>
-<img src="batch_850_sample_3_original.png" alt="Original">
-<img src="batch_850_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_850_sample_4</p>
-<img src="batch_850_sample_4_original.png" alt="Original">
-<img src="batch_850_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_900_sample_0</p>
-<img src="batch_900_sample_0_original.png" alt="Original">
-<img src="batch_900_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_900_sample_1</p>
-<img src="batch_900_sample_1_original.png" alt="Original">
-<img src="batch_900_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_900_sample_2</p>
-<img src="batch_900_sample_2_original.png" alt="Original">
-<img src="batch_900_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_900_sample_3</p>
-<img src="batch_900_sample_3_original.png" alt="Original">
-<img src="batch_900_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_900_sample_4</p>
-<img src="batch_900_sample_4_original.png" alt="Original">
-<img src="batch_900_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_950_sample_0</p>
-<img src="batch_950_sample_0_original.png" alt="Original">
-<img src="batch_950_sample_0_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_950_sample_1</p>
-<img src="batch_950_sample_1_original.png" alt="Original">
-<img src="batch_950_sample_1_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_950_sample_2</p>
-<img src="batch_950_sample_2_original.png" alt="Original">
-<img src="batch_950_sample_2_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_950_sample_3</p>
-<img src="batch_950_sample_3_original.png" alt="Original">
-<img src="batch_950_sample_3_reconstruction.png" alt="Reconstruction">
-</div>
-<div class="image-pair">
-<p>batch_950_sample_4</p>
-<img src="batch_950_sample_4_original.png" alt="Original">
-<img src="batch_950_sample_4_reconstruction.png" alt="Reconstruction">
-</div>
-</body>
+  <head>
+    <style>
+      .image-pair {
+        display: inline-block;
+        margin: 10px;
+        text-align: center;
+      }
+      .image-pair img {
+        width: 128px;
+        height: 128px;
+        margin: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Training Reconstructions - Epoch 2</h1>
+    <div class="image-pair">
+      <p>batch_0_sample_0</p>
+      <img src="batch_0_sample_0_original.png" alt="Original" />
+      <img src="batch_0_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_0_sample_1</p>
+      <img src="batch_0_sample_1_original.png" alt="Original" />
+      <img src="batch_0_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_0_sample_2</p>
+      <img src="batch_0_sample_2_original.png" alt="Original" />
+      <img src="batch_0_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_0_sample_3</p>
+      <img src="batch_0_sample_3_original.png" alt="Original" />
+      <img src="batch_0_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_0_sample_4</p>
+      <img src="batch_0_sample_4_original.png" alt="Original" />
+      <img src="batch_0_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1000_sample_0</p>
+      <img src="batch_1000_sample_0_original.png" alt="Original" />
+      <img src="batch_1000_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1000_sample_1</p>
+      <img src="batch_1000_sample_1_original.png" alt="Original" />
+      <img src="batch_1000_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1000_sample_2</p>
+      <img src="batch_1000_sample_2_original.png" alt="Original" />
+      <img src="batch_1000_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1000_sample_3</p>
+      <img src="batch_1000_sample_3_original.png" alt="Original" />
+      <img src="batch_1000_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1000_sample_4</p>
+      <img src="batch_1000_sample_4_original.png" alt="Original" />
+      <img src="batch_1000_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_100_sample_0</p>
+      <img src="batch_100_sample_0_original.png" alt="Original" />
+      <img src="batch_100_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_100_sample_1</p>
+      <img src="batch_100_sample_1_original.png" alt="Original" />
+      <img src="batch_100_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_100_sample_2</p>
+      <img src="batch_100_sample_2_original.png" alt="Original" />
+      <img src="batch_100_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_100_sample_3</p>
+      <img src="batch_100_sample_3_original.png" alt="Original" />
+      <img src="batch_100_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_100_sample_4</p>
+      <img src="batch_100_sample_4_original.png" alt="Original" />
+      <img src="batch_100_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1050_sample_0</p>
+      <img src="batch_1050_sample_0_original.png" alt="Original" />
+      <img src="batch_1050_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1050_sample_1</p>
+      <img src="batch_1050_sample_1_original.png" alt="Original" />
+      <img src="batch_1050_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1050_sample_2</p>
+      <img src="batch_1050_sample_2_original.png" alt="Original" />
+      <img src="batch_1050_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1050_sample_3</p>
+      <img src="batch_1050_sample_3_original.png" alt="Original" />
+      <img src="batch_1050_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1050_sample_4</p>
+      <img src="batch_1050_sample_4_original.png" alt="Original" />
+      <img src="batch_1050_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1100_sample_0</p>
+      <img src="batch_1100_sample_0_original.png" alt="Original" />
+      <img src="batch_1100_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1100_sample_1</p>
+      <img src="batch_1100_sample_1_original.png" alt="Original" />
+      <img src="batch_1100_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1100_sample_2</p>
+      <img src="batch_1100_sample_2_original.png" alt="Original" />
+      <img src="batch_1100_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1100_sample_3</p>
+      <img src="batch_1100_sample_3_original.png" alt="Original" />
+      <img src="batch_1100_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1100_sample_4</p>
+      <img src="batch_1100_sample_4_original.png" alt="Original" />
+      <img src="batch_1100_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1150_sample_0</p>
+      <img src="batch_1150_sample_0_original.png" alt="Original" />
+      <img src="batch_1150_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1150_sample_1</p>
+      <img src="batch_1150_sample_1_original.png" alt="Original" />
+      <img src="batch_1150_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1150_sample_2</p>
+      <img src="batch_1150_sample_2_original.png" alt="Original" />
+      <img src="batch_1150_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1150_sample_3</p>
+      <img src="batch_1150_sample_3_original.png" alt="Original" />
+      <img src="batch_1150_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1150_sample_4</p>
+      <img src="batch_1150_sample_4_original.png" alt="Original" />
+      <img src="batch_1150_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1200_sample_0</p>
+      <img src="batch_1200_sample_0_original.png" alt="Original" />
+      <img src="batch_1200_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1200_sample_1</p>
+      <img src="batch_1200_sample_1_original.png" alt="Original" />
+      <img src="batch_1200_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1200_sample_2</p>
+      <img src="batch_1200_sample_2_original.png" alt="Original" />
+      <img src="batch_1200_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1200_sample_3</p>
+      <img src="batch_1200_sample_3_original.png" alt="Original" />
+      <img src="batch_1200_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1200_sample_4</p>
+      <img src="batch_1200_sample_4_original.png" alt="Original" />
+      <img src="batch_1200_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1250_sample_0</p>
+      <img src="batch_1250_sample_0_original.png" alt="Original" />
+      <img src="batch_1250_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1250_sample_1</p>
+      <img src="batch_1250_sample_1_original.png" alt="Original" />
+      <img src="batch_1250_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1250_sample_2</p>
+      <img src="batch_1250_sample_2_original.png" alt="Original" />
+      <img src="batch_1250_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1250_sample_3</p>
+      <img src="batch_1250_sample_3_original.png" alt="Original" />
+      <img src="batch_1250_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1250_sample_4</p>
+      <img src="batch_1250_sample_4_original.png" alt="Original" />
+      <img src="batch_1250_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1300_sample_0</p>
+      <img src="batch_1300_sample_0_original.png" alt="Original" />
+      <img src="batch_1300_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1300_sample_1</p>
+      <img src="batch_1300_sample_1_original.png" alt="Original" />
+      <img src="batch_1300_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1300_sample_2</p>
+      <img src="batch_1300_sample_2_original.png" alt="Original" />
+      <img src="batch_1300_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1300_sample_3</p>
+      <img src="batch_1300_sample_3_original.png" alt="Original" />
+      <img src="batch_1300_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1300_sample_4</p>
+      <img src="batch_1300_sample_4_original.png" alt="Original" />
+      <img src="batch_1300_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1350_sample_0</p>
+      <img src="batch_1350_sample_0_original.png" alt="Original" />
+      <img src="batch_1350_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1350_sample_1</p>
+      <img src="batch_1350_sample_1_original.png" alt="Original" />
+      <img src="batch_1350_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1350_sample_2</p>
+      <img src="batch_1350_sample_2_original.png" alt="Original" />
+      <img src="batch_1350_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1350_sample_3</p>
+      <img src="batch_1350_sample_3_original.png" alt="Original" />
+      <img src="batch_1350_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1350_sample_4</p>
+      <img src="batch_1350_sample_4_original.png" alt="Original" />
+      <img src="batch_1350_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1400_sample_0</p>
+      <img src="batch_1400_sample_0_original.png" alt="Original" />
+      <img src="batch_1400_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1400_sample_1</p>
+      <img src="batch_1400_sample_1_original.png" alt="Original" />
+      <img src="batch_1400_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1400_sample_2</p>
+      <img src="batch_1400_sample_2_original.png" alt="Original" />
+      <img src="batch_1400_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1400_sample_3</p>
+      <img src="batch_1400_sample_3_original.png" alt="Original" />
+      <img src="batch_1400_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1400_sample_4</p>
+      <img src="batch_1400_sample_4_original.png" alt="Original" />
+      <img src="batch_1400_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1450_sample_0</p>
+      <img src="batch_1450_sample_0_original.png" alt="Original" />
+      <img src="batch_1450_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1450_sample_1</p>
+      <img src="batch_1450_sample_1_original.png" alt="Original" />
+      <img src="batch_1450_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1450_sample_2</p>
+      <img src="batch_1450_sample_2_original.png" alt="Original" />
+      <img src="batch_1450_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1450_sample_3</p>
+      <img src="batch_1450_sample_3_original.png" alt="Original" />
+      <img src="batch_1450_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1450_sample_4</p>
+      <img src="batch_1450_sample_4_original.png" alt="Original" />
+      <img src="batch_1450_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1500_sample_0</p>
+      <img src="batch_1500_sample_0_original.png" alt="Original" />
+      <img src="batch_1500_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1500_sample_1</p>
+      <img src="batch_1500_sample_1_original.png" alt="Original" />
+      <img src="batch_1500_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1500_sample_2</p>
+      <img src="batch_1500_sample_2_original.png" alt="Original" />
+      <img src="batch_1500_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1500_sample_3</p>
+      <img src="batch_1500_sample_3_original.png" alt="Original" />
+      <img src="batch_1500_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1500_sample_4</p>
+      <img src="batch_1500_sample_4_original.png" alt="Original" />
+      <img src="batch_1500_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_150_sample_0</p>
+      <img src="batch_150_sample_0_original.png" alt="Original" />
+      <img src="batch_150_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_150_sample_1</p>
+      <img src="batch_150_sample_1_original.png" alt="Original" />
+      <img src="batch_150_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_150_sample_2</p>
+      <img src="batch_150_sample_2_original.png" alt="Original" />
+      <img src="batch_150_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_150_sample_3</p>
+      <img src="batch_150_sample_3_original.png" alt="Original" />
+      <img src="batch_150_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_150_sample_4</p>
+      <img src="batch_150_sample_4_original.png" alt="Original" />
+      <img src="batch_150_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1550_sample_0</p>
+      <img src="batch_1550_sample_0_original.png" alt="Original" />
+      <img src="batch_1550_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1550_sample_1</p>
+      <img src="batch_1550_sample_1_original.png" alt="Original" />
+      <img src="batch_1550_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1550_sample_2</p>
+      <img src="batch_1550_sample_2_original.png" alt="Original" />
+      <img src="batch_1550_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1550_sample_3</p>
+      <img src="batch_1550_sample_3_original.png" alt="Original" />
+      <img src="batch_1550_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1550_sample_4</p>
+      <img src="batch_1550_sample_4_original.png" alt="Original" />
+      <img src="batch_1550_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1600_sample_0</p>
+      <img src="batch_1600_sample_0_original.png" alt="Original" />
+      <img src="batch_1600_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1600_sample_1</p>
+      <img src="batch_1600_sample_1_original.png" alt="Original" />
+      <img src="batch_1600_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1600_sample_2</p>
+      <img src="batch_1600_sample_2_original.png" alt="Original" />
+      <img src="batch_1600_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1600_sample_3</p>
+      <img src="batch_1600_sample_3_original.png" alt="Original" />
+      <img src="batch_1600_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1600_sample_4</p>
+      <img src="batch_1600_sample_4_original.png" alt="Original" />
+      <img src="batch_1600_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1650_sample_0</p>
+      <img src="batch_1650_sample_0_original.png" alt="Original" />
+      <img src="batch_1650_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1650_sample_1</p>
+      <img src="batch_1650_sample_1_original.png" alt="Original" />
+      <img src="batch_1650_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1650_sample_2</p>
+      <img src="batch_1650_sample_2_original.png" alt="Original" />
+      <img src="batch_1650_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1650_sample_3</p>
+      <img src="batch_1650_sample_3_original.png" alt="Original" />
+      <img src="batch_1650_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1650_sample_4</p>
+      <img src="batch_1650_sample_4_original.png" alt="Original" />
+      <img src="batch_1650_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1700_sample_0</p>
+      <img src="batch_1700_sample_0_original.png" alt="Original" />
+      <img src="batch_1700_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1700_sample_1</p>
+      <img src="batch_1700_sample_1_original.png" alt="Original" />
+      <img src="batch_1700_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1700_sample_2</p>
+      <img src="batch_1700_sample_2_original.png" alt="Original" />
+      <img src="batch_1700_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1700_sample_3</p>
+      <img src="batch_1700_sample_3_original.png" alt="Original" />
+      <img src="batch_1700_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1700_sample_4</p>
+      <img src="batch_1700_sample_4_original.png" alt="Original" />
+      <img src="batch_1700_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1750_sample_0</p>
+      <img src="batch_1750_sample_0_original.png" alt="Original" />
+      <img src="batch_1750_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1750_sample_1</p>
+      <img src="batch_1750_sample_1_original.png" alt="Original" />
+      <img src="batch_1750_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1750_sample_2</p>
+      <img src="batch_1750_sample_2_original.png" alt="Original" />
+      <img src="batch_1750_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1750_sample_3</p>
+      <img src="batch_1750_sample_3_original.png" alt="Original" />
+      <img src="batch_1750_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1750_sample_4</p>
+      <img src="batch_1750_sample_4_original.png" alt="Original" />
+      <img src="batch_1750_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1800_sample_0</p>
+      <img src="batch_1800_sample_0_original.png" alt="Original" />
+      <img src="batch_1800_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1800_sample_1</p>
+      <img src="batch_1800_sample_1_original.png" alt="Original" />
+      <img src="batch_1800_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1800_sample_2</p>
+      <img src="batch_1800_sample_2_original.png" alt="Original" />
+      <img src="batch_1800_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1800_sample_3</p>
+      <img src="batch_1800_sample_3_original.png" alt="Original" />
+      <img src="batch_1800_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1800_sample_4</p>
+      <img src="batch_1800_sample_4_original.png" alt="Original" />
+      <img src="batch_1800_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1850_sample_0</p>
+      <img src="batch_1850_sample_0_original.png" alt="Original" />
+      <img src="batch_1850_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1850_sample_1</p>
+      <img src="batch_1850_sample_1_original.png" alt="Original" />
+      <img src="batch_1850_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1850_sample_2</p>
+      <img src="batch_1850_sample_2_original.png" alt="Original" />
+      <img src="batch_1850_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1850_sample_3</p>
+      <img src="batch_1850_sample_3_original.png" alt="Original" />
+      <img src="batch_1850_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_1850_sample_4</p>
+      <img src="batch_1850_sample_4_original.png" alt="Original" />
+      <img src="batch_1850_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_200_sample_0</p>
+      <img src="batch_200_sample_0_original.png" alt="Original" />
+      <img src="batch_200_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_200_sample_1</p>
+      <img src="batch_200_sample_1_original.png" alt="Original" />
+      <img src="batch_200_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_200_sample_2</p>
+      <img src="batch_200_sample_2_original.png" alt="Original" />
+      <img src="batch_200_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_200_sample_3</p>
+      <img src="batch_200_sample_3_original.png" alt="Original" />
+      <img src="batch_200_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_200_sample_4</p>
+      <img src="batch_200_sample_4_original.png" alt="Original" />
+      <img src="batch_200_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_250_sample_0</p>
+      <img src="batch_250_sample_0_original.png" alt="Original" />
+      <img src="batch_250_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_250_sample_1</p>
+      <img src="batch_250_sample_1_original.png" alt="Original" />
+      <img src="batch_250_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_250_sample_2</p>
+      <img src="batch_250_sample_2_original.png" alt="Original" />
+      <img src="batch_250_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_250_sample_3</p>
+      <img src="batch_250_sample_3_original.png" alt="Original" />
+      <img src="batch_250_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_250_sample_4</p>
+      <img src="batch_250_sample_4_original.png" alt="Original" />
+      <img src="batch_250_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_300_sample_0</p>
+      <img src="batch_300_sample_0_original.png" alt="Original" />
+      <img src="batch_300_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_300_sample_1</p>
+      <img src="batch_300_sample_1_original.png" alt="Original" />
+      <img src="batch_300_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_300_sample_2</p>
+      <img src="batch_300_sample_2_original.png" alt="Original" />
+      <img src="batch_300_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_300_sample_3</p>
+      <img src="batch_300_sample_3_original.png" alt="Original" />
+      <img src="batch_300_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_300_sample_4</p>
+      <img src="batch_300_sample_4_original.png" alt="Original" />
+      <img src="batch_300_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_350_sample_0</p>
+      <img src="batch_350_sample_0_original.png" alt="Original" />
+      <img src="batch_350_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_350_sample_1</p>
+      <img src="batch_350_sample_1_original.png" alt="Original" />
+      <img src="batch_350_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_350_sample_2</p>
+      <img src="batch_350_sample_2_original.png" alt="Original" />
+      <img src="batch_350_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_350_sample_3</p>
+      <img src="batch_350_sample_3_original.png" alt="Original" />
+      <img src="batch_350_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_350_sample_4</p>
+      <img src="batch_350_sample_4_original.png" alt="Original" />
+      <img src="batch_350_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_400_sample_0</p>
+      <img src="batch_400_sample_0_original.png" alt="Original" />
+      <img src="batch_400_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_400_sample_1</p>
+      <img src="batch_400_sample_1_original.png" alt="Original" />
+      <img src="batch_400_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_400_sample_2</p>
+      <img src="batch_400_sample_2_original.png" alt="Original" />
+      <img src="batch_400_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_400_sample_3</p>
+      <img src="batch_400_sample_3_original.png" alt="Original" />
+      <img src="batch_400_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_400_sample_4</p>
+      <img src="batch_400_sample_4_original.png" alt="Original" />
+      <img src="batch_400_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_450_sample_0</p>
+      <img src="batch_450_sample_0_original.png" alt="Original" />
+      <img src="batch_450_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_450_sample_1</p>
+      <img src="batch_450_sample_1_original.png" alt="Original" />
+      <img src="batch_450_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_450_sample_2</p>
+      <img src="batch_450_sample_2_original.png" alt="Original" />
+      <img src="batch_450_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_450_sample_3</p>
+      <img src="batch_450_sample_3_original.png" alt="Original" />
+      <img src="batch_450_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_450_sample_4</p>
+      <img src="batch_450_sample_4_original.png" alt="Original" />
+      <img src="batch_450_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_500_sample_0</p>
+      <img src="batch_500_sample_0_original.png" alt="Original" />
+      <img src="batch_500_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_500_sample_1</p>
+      <img src="batch_500_sample_1_original.png" alt="Original" />
+      <img src="batch_500_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_500_sample_2</p>
+      <img src="batch_500_sample_2_original.png" alt="Original" />
+      <img src="batch_500_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_500_sample_3</p>
+      <img src="batch_500_sample_3_original.png" alt="Original" />
+      <img src="batch_500_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_500_sample_4</p>
+      <img src="batch_500_sample_4_original.png" alt="Original" />
+      <img src="batch_500_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_50_sample_0</p>
+      <img src="batch_50_sample_0_original.png" alt="Original" />
+      <img src="batch_50_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_50_sample_1</p>
+      <img src="batch_50_sample_1_original.png" alt="Original" />
+      <img src="batch_50_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_50_sample_2</p>
+      <img src="batch_50_sample_2_original.png" alt="Original" />
+      <img src="batch_50_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_50_sample_3</p>
+      <img src="batch_50_sample_3_original.png" alt="Original" />
+      <img src="batch_50_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_50_sample_4</p>
+      <img src="batch_50_sample_4_original.png" alt="Original" />
+      <img src="batch_50_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_550_sample_0</p>
+      <img src="batch_550_sample_0_original.png" alt="Original" />
+      <img src="batch_550_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_550_sample_1</p>
+      <img src="batch_550_sample_1_original.png" alt="Original" />
+      <img src="batch_550_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_550_sample_2</p>
+      <img src="batch_550_sample_2_original.png" alt="Original" />
+      <img src="batch_550_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_550_sample_3</p>
+      <img src="batch_550_sample_3_original.png" alt="Original" />
+      <img src="batch_550_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_550_sample_4</p>
+      <img src="batch_550_sample_4_original.png" alt="Original" />
+      <img src="batch_550_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_600_sample_0</p>
+      <img src="batch_600_sample_0_original.png" alt="Original" />
+      <img src="batch_600_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_600_sample_1</p>
+      <img src="batch_600_sample_1_original.png" alt="Original" />
+      <img src="batch_600_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_600_sample_2</p>
+      <img src="batch_600_sample_2_original.png" alt="Original" />
+      <img src="batch_600_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_600_sample_3</p>
+      <img src="batch_600_sample_3_original.png" alt="Original" />
+      <img src="batch_600_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_600_sample_4</p>
+      <img src="batch_600_sample_4_original.png" alt="Original" />
+      <img src="batch_600_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_650_sample_0</p>
+      <img src="batch_650_sample_0_original.png" alt="Original" />
+      <img src="batch_650_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_650_sample_1</p>
+      <img src="batch_650_sample_1_original.png" alt="Original" />
+      <img src="batch_650_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_650_sample_2</p>
+      <img src="batch_650_sample_2_original.png" alt="Original" />
+      <img src="batch_650_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_650_sample_3</p>
+      <img src="batch_650_sample_3_original.png" alt="Original" />
+      <img src="batch_650_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_650_sample_4</p>
+      <img src="batch_650_sample_4_original.png" alt="Original" />
+      <img src="batch_650_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_700_sample_0</p>
+      <img src="batch_700_sample_0_original.png" alt="Original" />
+      <img src="batch_700_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_700_sample_1</p>
+      <img src="batch_700_sample_1_original.png" alt="Original" />
+      <img src="batch_700_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_700_sample_2</p>
+      <img src="batch_700_sample_2_original.png" alt="Original" />
+      <img src="batch_700_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_700_sample_3</p>
+      <img src="batch_700_sample_3_original.png" alt="Original" />
+      <img src="batch_700_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_700_sample_4</p>
+      <img src="batch_700_sample_4_original.png" alt="Original" />
+      <img src="batch_700_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_750_sample_0</p>
+      <img src="batch_750_sample_0_original.png" alt="Original" />
+      <img src="batch_750_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_750_sample_1</p>
+      <img src="batch_750_sample_1_original.png" alt="Original" />
+      <img src="batch_750_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_750_sample_2</p>
+      <img src="batch_750_sample_2_original.png" alt="Original" />
+      <img src="batch_750_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_750_sample_3</p>
+      <img src="batch_750_sample_3_original.png" alt="Original" />
+      <img src="batch_750_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_750_sample_4</p>
+      <img src="batch_750_sample_4_original.png" alt="Original" />
+      <img src="batch_750_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_800_sample_0</p>
+      <img src="batch_800_sample_0_original.png" alt="Original" />
+      <img src="batch_800_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_800_sample_1</p>
+      <img src="batch_800_sample_1_original.png" alt="Original" />
+      <img src="batch_800_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_800_sample_2</p>
+      <img src="batch_800_sample_2_original.png" alt="Original" />
+      <img src="batch_800_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_800_sample_3</p>
+      <img src="batch_800_sample_3_original.png" alt="Original" />
+      <img src="batch_800_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_800_sample_4</p>
+      <img src="batch_800_sample_4_original.png" alt="Original" />
+      <img src="batch_800_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_850_sample_0</p>
+      <img src="batch_850_sample_0_original.png" alt="Original" />
+      <img src="batch_850_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_850_sample_1</p>
+      <img src="batch_850_sample_1_original.png" alt="Original" />
+      <img src="batch_850_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_850_sample_2</p>
+      <img src="batch_850_sample_2_original.png" alt="Original" />
+      <img src="batch_850_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_850_sample_3</p>
+      <img src="batch_850_sample_3_original.png" alt="Original" />
+      <img src="batch_850_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_850_sample_4</p>
+      <img src="batch_850_sample_4_original.png" alt="Original" />
+      <img src="batch_850_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_900_sample_0</p>
+      <img src="batch_900_sample_0_original.png" alt="Original" />
+      <img src="batch_900_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_900_sample_1</p>
+      <img src="batch_900_sample_1_original.png" alt="Original" />
+      <img src="batch_900_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_900_sample_2</p>
+      <img src="batch_900_sample_2_original.png" alt="Original" />
+      <img src="batch_900_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_900_sample_3</p>
+      <img src="batch_900_sample_3_original.png" alt="Original" />
+      <img src="batch_900_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_900_sample_4</p>
+      <img src="batch_900_sample_4_original.png" alt="Original" />
+      <img src="batch_900_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_950_sample_0</p>
+      <img src="batch_950_sample_0_original.png" alt="Original" />
+      <img src="batch_950_sample_0_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_950_sample_1</p>
+      <img src="batch_950_sample_1_original.png" alt="Original" />
+      <img src="batch_950_sample_1_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_950_sample_2</p>
+      <img src="batch_950_sample_2_original.png" alt="Original" />
+      <img src="batch_950_sample_2_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_950_sample_3</p>
+      <img src="batch_950_sample_3_original.png" alt="Original" />
+      <img src="batch_950_sample_3_reconstruction.png" alt="Reconstruction" />
+    </div>
+    <div class="image-pair">
+      <p>batch_950_sample_4</p>
+      <img src="batch_950_sample_4_original.png" alt="Original" />
+      <img src="batch_950_sample_4_reconstruction.png" alt="Reconstruction" />
+    </div>
+  </body>
 </html>

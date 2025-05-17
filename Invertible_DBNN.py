@@ -1,19 +1,22 @@
-#------------------------------------------------------Invertable DBNN -------------------------
-import torch
-import numpy as np
-from typing import Dict, Tuple, Optional, List
+# ------------------------------------------------------Invertable DBNN -------------------------
 import logging
+from typing import Dict
+
+import torch
 from tqdm import tqdm
+
 
 class InvertibleDBNN(torch.nn.Module):
     """Enhanced Invertible Difference Boosting Neural Network implementation with proper gradient tracking"""
 
-    def __init__(self,
-                 forward_model: 'DBNN',
-                 feature_dims: int,
-                 reconstruction_weight: float = 0.5,
-                 feedback_strength: float = 0.3,
-                 debug: bool = False):
+    def __init__(
+        self,
+        forward_model: "DBNN",
+        feature_dims: int,
+        reconstruction_weight: float = 0.5,
+        feedback_strength: float = 0.3,
+        debug: bool = False,
+    ):
         """
         Initialize the invertible DBNN.
 
@@ -24,7 +27,7 @@ class InvertibleDBNN(torch.nn.Module):
             feedback_strength: Strength of reconstruction feedback (0-1)
             debug: Enable debug logging
         """
-        super(InvertibleDBNN, self).__init__()
+        super().__init__()
         self.forward_model = forward_model
         self.device = forward_model.device
         self.feature_dims = feature_dims
@@ -43,16 +46,16 @@ class InvertibleDBNN(torch.nn.Module):
         self.inverse_feature_pairs = None
 
         # Feature scaling parameters as buffers
-        self.register_buffer('min_vals', None)
-        self.register_buffer('max_vals', None)
-        self.register_buffer('scale_factors', None)
+        self.register_buffer("min_vals", None)
+        self.register_buffer("max_vals", None)
+        self.register_buffer("scale_factors", None)
 
         # Metrics tracking
         self.metrics = {
-            'reconstruction_errors': [],
-            'forward_errors': [],
-            'total_losses': [],
-            'accuracies': []
+            "reconstruction_errors": [],
+            "forward_errors": [],
+            "total_losses": [],
+            "accuracies": [],
         }
 
         # Initialize all components
@@ -60,43 +63,50 @@ class InvertibleDBNN(torch.nn.Module):
 
     def save_inverse_model(self, custom_path: str = None) -> bool:
         try:
-            save_dir = custom_path or os.path.join('Model', f'Best_inverse_{self.forward_model.dataset_name}')
+            save_dir = custom_path or os.path.join(
+                "Model", f"Best_inverse_{self.forward_model.dataset_name}"
+            )
             os.makedirs(save_dir, exist_ok=True)
 
             # Save model state
             model_state = {
-                'weight_linear': self.weight_linear.data,
-                'weight_nonlinear': self.weight_nonlinear.data,
-                'bias_linear': self.bias_linear.data,
-                'bias_nonlinear': self.bias_nonlinear.data,
-                'feature_attention': self.feature_attention.data,
-                'layer_norm': self.layer_norm.state_dict(),
-                'metrics': self.metrics,
-                'feature_dims': self.feature_dims,
-                'n_classes': self.n_classes,
-                'reconstruction_weight': self.reconstruction_weight,
-                'feedback_strength': self.feedback_strength
+                "weight_linear": self.weight_linear.data,
+                "weight_nonlinear": self.weight_nonlinear.data,
+                "bias_linear": self.bias_linear.data,
+                "bias_nonlinear": self.bias_nonlinear.data,
+                "feature_attention": self.feature_attention.data,
+                "layer_norm": self.layer_norm.state_dict(),
+                "metrics": self.metrics,
+                "feature_dims": self.feature_dims,
+                "n_classes": self.n_classes,
+                "reconstruction_weight": self.reconstruction_weight,
+                "feedback_strength": self.feedback_strength,
             }
 
             # Save scale parameters if they exist
-            for param in ['min_vals', 'max_vals', 'scale_factors', 'inverse_feature_pairs']:
+            for param in [
+                "min_vals",
+                "max_vals",
+                "scale_factors",
+                "inverse_feature_pairs",
+            ]:
                 if hasattr(self, param):
                     model_state[param] = getattr(self, param)
 
-            model_path = os.path.join(save_dir, 'inverse_model.pt')
+            model_path = os.path.join(save_dir, "inverse_model.pt")
             torch.save(model_state, model_path)
 
             # Save config
             config = {
-                'feature_dims': self.feature_dims,
-                'reconstruction_weight': float(self.reconstruction_weight),
-                'feedback_strength': float(self.feedback_strength),
-                'n_classes': int(self.n_classes),
-                'device': str(self.device)
+                "feature_dims": self.feature_dims,
+                "reconstruction_weight": float(self.reconstruction_weight),
+                "feedback_strength": float(self.feedback_strength),
+                "n_classes": int(self.n_classes),
+                "device": str(self.device),
             }
 
-            config_path = os.path.join(save_dir, 'inverse_config.json')
-            with open(config_path, 'w') as f:
+            config_path = os.path.join(save_dir, "inverse_config.json")
+            with open(config_path, "w") as f:
                 json.dump(config, f, indent=4)
 
             print(f"Saved inverse model to {save_dir}")
@@ -108,53 +118,65 @@ class InvertibleDBNN(torch.nn.Module):
             return False
 
     def load_inverse_model(self, custom_path: str = None) -> bool:
-       try:
-           load_dir = custom_path or os.path.join('Model', f'Best_inverse_{self.forward_model.dataset_name}')
-           model_path = os.path.join(load_dir, 'inverse_model.pt')
-           config_path = os.path.join(load_dir, 'inverse_config.json')
+        try:
+            load_dir = custom_path or os.path.join(
+                "Model", f"Best_inverse_{self.forward_model.dataset_name}"
+            )
+            model_path = os.path.join(load_dir, "inverse_model.pt")
+            config_path = os.path.join(load_dir, "inverse_config.json")
 
-           if not (os.path.exists(model_path) and os.path.exists(config_path)):
-               print(f"No saved inverse model found at {load_dir}")
-               return False
+            if not (os.path.exists(model_path) and os.path.exists(config_path)):
+                print(f"No saved inverse model found at {load_dir}")
+                return False
 
-           model_state = torch.load(model_path, map_location=self.device, weights_only=True)
+            model_state = torch.load(
+                model_path, map_location=self.device, weights_only=True
+            )
 
-           with open(config_path, 'r') as f:
-               config = json.load(f)
+            with open(config_path) as f:
+                config = json.load(f)
 
-           if config['feature_dims'] != self.feature_dims or config['n_classes'] != self.n_classes:
-               raise ValueError("Model architecture mismatch")
+            if (
+                config["feature_dims"] != self.feature_dims
+                or config["n_classes"] != self.n_classes
+            ):
+                raise ValueError("Model architecture mismatch")
 
-           # Load parameters
-           self.weight_linear.data = model_state['weight_linear']
-           self.weight_nonlinear.data = model_state['weight_nonlinear']
-           self.bias_linear.data = model_state['bias_linear']
-           self.bias_nonlinear.data = model_state['bias_nonlinear']
-           self.feature_attention.data = model_state['feature_attention']
-           self.layer_norm.load_state_dict(model_state['layer_norm'])
+            # Load parameters
+            self.weight_linear.data = model_state["weight_linear"]
+            self.weight_nonlinear.data = model_state["weight_nonlinear"]
+            self.bias_linear.data = model_state["bias_linear"]
+            self.bias_nonlinear.data = model_state["bias_nonlinear"]
+            self.feature_attention.data = model_state["feature_attention"]
+            self.layer_norm.load_state_dict(model_state["layer_norm"])
 
-           # Safely update or register buffers
-           for param in ['min_vals', 'max_vals', 'scale_factors', 'inverse_feature_pairs']:
-               if param in model_state:
-                   buffer_data = model_state[param]
-                   if buffer_data is not None:
-                       if hasattr(self, param) and getattr(self, param) is not None:
-                           getattr(self, param).copy_(buffer_data)
-                       else:
-                           self.register_buffer(param, buffer_data)
+            # Safely update or register buffers
+            for param in [
+                "min_vals",
+                "max_vals",
+                "scale_factors",
+                "inverse_feature_pairs",
+            ]:
+                if param in model_state:
+                    buffer_data = model_state[param]
+                    if buffer_data is not None:
+                        if hasattr(self, param) and getattr(self, param) is not None:
+                            getattr(self, param).copy_(buffer_data)
+                        else:
+                            self.register_buffer(param, buffer_data)
 
-           # Restore other attributes
-           self.metrics = model_state.get('metrics', {})
-           self.reconstruction_weight = model_state.get('reconstruction_weight', 0.5)
-           self.feedback_strength = model_state.get('feedback_strength', 0.3)
+            # Restore other attributes
+            self.metrics = model_state.get("metrics", {})
+            self.reconstruction_weight = model_state.get("reconstruction_weight", 0.5)
+            self.feedback_strength = model_state.get("feedback_strength", 0.3)
 
-           print(f"Loaded inverse model from {load_dir}")
-           return True
+            print(f"Loaded inverse model from {load_dir}")
+            return True
 
-       except Exception as e:
-           print(f"Error loading inverse model: {str(e)}")
-           traceback.print_exc()
-           return False
+        except Exception as e:
+            print(f"Error loading inverse model: {str(e)}")
+            traceback.print_exc()
+            return False
 
     def _initialize_inverse_components(self):
         """Initialize inverse model parameters with proper buffer handling"""
@@ -165,8 +187,8 @@ class InvertibleDBNN(torch.nn.Module):
             feature_pairs = torch.cartesian_prod(class_indices, feature_indices)
 
             # Safely register buffer
-            if not hasattr(self, 'inverse_feature_pairs'):
-                self.register_buffer('inverse_feature_pairs', feature_pairs)
+            if not hasattr(self, "inverse_feature_pairs"):
+                self.register_buffer("inverse_feature_pairs", feature_pairs)
             else:
                 self.inverse_feature_pairs = feature_pairs
 
@@ -176,11 +198,11 @@ class InvertibleDBNN(torch.nn.Module):
             # Initialize weights as nn.Parameters
             self.weight_linear = torch.nn.Parameter(
                 torch.empty((n_pairs, self.feature_dims), device=self.device),
-                requires_grad=True
+                requires_grad=True,
             )
             self.weight_nonlinear = torch.nn.Parameter(
                 torch.empty((n_pairs, self.feature_dims), device=self.device),
-                requires_grad=True
+                requires_grad=True,
             )
 
             # Initialize with proper scaling
@@ -189,12 +211,10 @@ class InvertibleDBNN(torch.nn.Module):
 
             # Initialize biases as nn.Parameters
             self.bias_linear = torch.nn.Parameter(
-                torch.zeros(self.feature_dims, device=self.device),
-                requires_grad=True
+                torch.zeros(self.feature_dims, device=self.device), requires_grad=True
             )
             self.bias_nonlinear = torch.nn.Parameter(
-                torch.zeros(self.feature_dims, device=self.device),
-                requires_grad=True
+                torch.zeros(self.feature_dims, device=self.device), requires_grad=True
             )
 
             # Initialize layer normalization
@@ -202,23 +222,27 @@ class InvertibleDBNN(torch.nn.Module):
 
             # Initialize feature attention
             self.feature_attention = torch.nn.Parameter(
-                torch.ones(self.feature_dims, device=self.device),
-                requires_grad=True
+                torch.ones(self.feature_dims, device=self.device), requires_grad=True
             )
 
             # Safely register scaling buffers
-            for name in ['min_vals', 'max_vals', 'scale_factors']:
+            for name in ["min_vals", "max_vals", "scale_factors"]:
                 if not hasattr(self, name):
                     self.register_buffer(name, None)
 
             if self.debug:
                 self.logger.debug(f"Initialized inverse components:")
-                self.logger.debug(f"- Feature pairs shape: {self.inverse_feature_pairs.shape}")
+                self.logger.debug(
+                    f"- Feature pairs shape: {self.inverse_feature_pairs.shape}"
+                )
                 self.logger.debug(f"- Linear weights shape: {self.weight_linear.shape}")
-                self.logger.debug(f"- Nonlinear weights shape: {self.weight_nonlinear.shape}")
+                self.logger.debug(
+                    f"- Nonlinear weights shape: {self.weight_nonlinear.shape}"
+                )
 
         except Exception as e:
             raise RuntimeError(f"Failed to initialize inverse components: {str(e)}")
+
     def _compute_feature_scaling(self, features: torch.Tensor):
         """Compute feature scaling parameters for consistent reconstruction"""
         with torch.no_grad():
@@ -243,7 +267,7 @@ class InvertibleDBNN(torch.nn.Module):
         reconstructed_features = torch.zeros(
             (batch_size, self.feature_dims),
             device=self.device,
-            dtype=self.weight_linear.dtype
+            dtype=self.weight_linear.dtype,
         )
 
         # Apply attention mechanism
@@ -255,29 +279,31 @@ class InvertibleDBNN(torch.nn.Module):
 
         for feat_idx in range(self.feature_dims):
             # Get relevant pairs for this feature
-            relevant_pairs = torch.where(self.inverse_feature_pairs[:, 1] == feat_idx)[0]
+            relevant_pairs = torch.where(self.inverse_feature_pairs[:, 1] == feat_idx)[
+                0
+            ]
 
             # Get class contributions
-            class_contributions = class_probs[:, self.inverse_feature_pairs[relevant_pairs, 0]]
+            class_contributions = class_probs[
+                :, self.inverse_feature_pairs[relevant_pairs, 0]
+            ]
 
             # Linear transformation
             linear_weights = self.weight_linear[relevant_pairs, feat_idx]
             linear_features[:, feat_idx] = torch.mm(
-                class_contributions,
-                linear_weights.unsqueeze(1)
+                class_contributions, linear_weights.unsqueeze(1)
             ).squeeze()
 
             # Nonlinear transformation with tanh activation
             nonlinear_weights = self.weight_nonlinear[relevant_pairs, feat_idx]
-            nonlinear_features[:, feat_idx] = torch.tanh(torch.mm(
-                class_contributions,
-                nonlinear_weights.unsqueeze(1)
-            ).squeeze())
+            nonlinear_features[:, feat_idx] = torch.tanh(
+                torch.mm(class_contributions, nonlinear_weights.unsqueeze(1)).squeeze()
+            )
 
         # Combine transformations with attention
         reconstructed_features = (
-            attention_weights * linear_features +
-            (1 - attention_weights) * nonlinear_features
+            attention_weights * linear_features
+            + (1 - attention_weights) * nonlinear_features
         )
 
         # Add biases
@@ -288,11 +314,13 @@ class InvertibleDBNN(torch.nn.Module):
 
         return reconstructed_features
 
-    def _compute_reconstruction_loss(self,
-                                   original_features: torch.Tensor,
-                                   reconstructed_features: torch.Tensor,
-                                   class_probs: torch.Tensor,
-                                   reduction: str = 'mean') -> torch.Tensor:
+    def _compute_reconstruction_loss(
+        self,
+        original_features: torch.Tensor,
+        reconstructed_features: torch.Tensor,
+        class_probs: torch.Tensor,
+        reduction: str = "mean",
+    ) -> torch.Tensor:
         """Enhanced reconstruction loss with multiple components"""
         # Scale features
         orig_scaled = self._scale_features(original_features)
@@ -305,29 +333,23 @@ class InvertibleDBNN(torch.nn.Module):
         orig_centered = orig_scaled - orig_scaled.mean(dim=0, keepdim=True)
         recon_centered = recon_scaled - recon_scaled.mean(dim=0, keepdim=True)
 
-        corr_loss = -torch.sum(
-            orig_centered * recon_centered, dim=1
-        ) / (torch.norm(orig_centered, dim=1) * torch.norm(recon_centered, dim=1) + 1e-8)
+        corr_loss = -torch.sum(orig_centered * recon_centered, dim=1) / (
+            torch.norm(orig_centered, dim=1) * torch.norm(recon_centered, dim=1) + 1e-8
+        )
 
         # Distribution matching loss using KL divergence
         orig_dist = torch.distributions.Normal(
-            orig_scaled.mean(dim=0),
-            orig_scaled.std(dim=0) + 1e-8
+            orig_scaled.mean(dim=0), orig_scaled.std(dim=0) + 1e-8
         )
         recon_dist = torch.distributions.Normal(
-            recon_scaled.mean(dim=0),
-            recon_scaled.std(dim=0) + 1e-8
+            recon_scaled.mean(dim=0), recon_scaled.std(dim=0) + 1e-8
         )
         dist_loss = torch.distributions.kl_divergence(orig_dist, recon_dist).mean()
 
         # Combine losses with learned weights
-        combined_loss = (
-            mse_loss +
-            0.1 * corr_loss +
-            0.01 * dist_loss
-        )
+        combined_loss = mse_loss + 0.1 * corr_loss + 0.01 * dist_loss
 
-        if reduction == 'mean':
+        if reduction == "mean":
             return combined_loss.mean()
         return combined_loss
 
@@ -356,7 +378,9 @@ class InvertibleDBNN(torch.nn.Module):
                 n_errors = 0
 
                 # Process training batches
-                with tqdm(total=n_batches, desc=f"Training batches", leave=False) as batch_pbar:
+                with tqdm(
+                    total=n_batches, desc=f"Training batches", leave=False
+                ) as batch_pbar:
                     for i in range(0, n_samples, batch_size):
                         batch_end = min(i + batch_size, n_samples)
                         batch_X = X_train[i:batch_end]
@@ -365,18 +389,20 @@ class InvertibleDBNN(torch.nn.Module):
                         # Forward pass and error collection
                         posteriors = self._compute_batch_posterior(batch_X)[0]
                         predictions = torch.argmax(posteriors, dim=1)
-                        errors = (predictions != batch_y)
+                        errors = predictions != batch_y
                         n_errors += errors.sum().item()
 
                         # Collect failed cases for weight updates
                         if errors.any():
                             fail_idx = torch.where(errors)[0]
                             for idx in fail_idx:
-                                failed_cases.append((
-                                    batch_X[idx],
-                                    batch_y[idx].item(),
-                                    posteriors[idx].cpu().numpy()
-                                ))
+                                failed_cases.append(
+                                    (
+                                        batch_X[idx],
+                                        batch_y[idx].item(),
+                                        posteriors[idx].cpu().numpy(),
+                                    )
+                                )
                         batch_pbar.update(1)
 
                 # Update weights after processing all batches
@@ -391,23 +417,33 @@ class InvertibleDBNN(torch.nn.Module):
                 # Evaluate on test set once per epoch
                 if X_test is not None and y_test is not None:
                     test_predictions = self.predict(X_test, batch_size=batch_size)
-                    test_accuracy = (test_predictions == y_test.cpu()).float().mean().item()
+                    test_accuracy = (
+                        (test_predictions == y_test.cpu()).float().mean().item()
+                    )
 
                     # Print confusion matrix only for best test performance
                     if test_accuracy > best_test_accuracy:
                         best_test_accuracy = test_accuracy
                         print("\nTest Set Performance:")
-                        y_test_labels = self.label_encoder.inverse_transform(y_test.cpu().numpy())
-                        test_pred_labels = self.label_encoder.inverse_transform(test_predictions.cpu().numpy())
-                        self.print_colored_confusion_matrix(y_test_labels, test_pred_labels)
+                        y_test_labels = self.label_encoder.inverse_transform(
+                            y_test.cpu().numpy()
+                        )
+                        test_pred_labels = self.label_encoder.inverse_transform(
+                            test_predictions.cpu().numpy()
+                        )
+                        self.print_colored_confusion_matrix(
+                            y_test_labels, test_pred_labels
+                        )
 
                 # Update progress bar with metrics
-                epoch_pbar.set_postfix({
-                    'train_acc': f"{train_accuracy:.4f}",
-                    'best_train': f"{best_train_accuracy:.4f}",
-                    'test_acc': f"{test_accuracy:.4f}",
-                    'best_test': f"{best_test_accuracy:.4f}"
-                })
+                epoch_pbar.set_postfix(
+                    {
+                        "train_acc": f"{train_accuracy:.4f}",
+                        "best_train": f"{best_train_accuracy:.4f}",
+                        "test_acc": f"{test_accuracy:.4f}",
+                        "best_test": f"{best_test_accuracy:.4f}",
+                    }
+                )
                 epoch_pbar.update(1)
 
                 # Check improvement and update tracking
@@ -454,13 +490,15 @@ class InvertibleDBNN(torch.nn.Module):
             class_probs = class_probs.to(dtype=torch.float32)
             reconstructed = self._compute_inverse_posterior(class_probs)
 
-            if hasattr(self, 'min_vals') and self.min_vals is not None:
+            if hasattr(self, "min_vals") and self.min_vals is not None:
                 reconstructed = self._unscale_features(reconstructed)
                 # Ensure output matches input dtype
                 return reconstructed.to(dtype=self.weight_linear.dtype)
             return reconstructed.to(dtype=self.weight_linear.dtype)
 
-    def evaluate(self, features: torch.Tensor, labels: torch.Tensor) -> Dict[str, float]:
+    def evaluate(
+        self, features: torch.Tensor, labels: torch.Tensor
+    ) -> Dict[str, float]:
         """
         Evaluate model performance.
 
@@ -476,7 +514,9 @@ class InvertibleDBNN(torch.nn.Module):
             if self.forward_model.model_type == "Histogram":
                 class_probs, _ = self.forward_model._compute_batch_posterior(features)
             else:
-                class_probs, _ = self.forward_model._compute_batch_posterior_std(features)
+                class_probs, _ = self.forward_model._compute_batch_posterior_std(
+                    features
+                )
 
             # Get predictions and convert to numpy
             predictions = torch.argmax(class_probs, dim=1)
@@ -485,10 +525,13 @@ class InvertibleDBNN(torch.nn.Module):
 
             # Convert to original class labels
             true_labels = self.forward_model.label_encoder.inverse_transform(labels_np)
-            pred_labels = self.forward_model.label_encoder.inverse_transform(predictions_np)
+            pred_labels = self.forward_model.label_encoder.inverse_transform(
+                predictions_np
+            )
 
             # Compute classification report and confusion matrix
             from sklearn.metrics import classification_report, confusion_matrix
+
             class_report = classification_report(true_labels, pred_labels)
             conf_matrix = confusion_matrix(true_labels, pred_labels)
 
@@ -496,40 +539,46 @@ class InvertibleDBNN(torch.nn.Module):
             test_accuracy = (predictions == labels).float().mean().item()
 
             # Get training error rates from metrics history
-            error_rates = self.metrics.get('forward_errors', [])
-            if not error_rates and hasattr(self.forward_model, 'error_rates'):
+            error_rates = self.metrics.get("forward_errors", [])
+            if not error_rates and hasattr(self.forward_model, "error_rates"):
                 error_rates = self.forward_model.error_rates
 
             # Get reconstruction metrics
             reconstructed_features = self.reconstruct_features(class_probs)
             reconstruction_loss = self._compute_reconstruction_loss(
-                features, reconstructed_features, reduction='mean'
+                features, reconstructed_features, reduction="mean"
             ).item()
 
             # Prepare results dictionary matching expected format
             results = {
-                'classification_report': class_report,
-                'confusion_matrix': conf_matrix,
-                'error_rates': error_rates,
-                'test_accuracy': test_accuracy,
-                'reconstruction_loss': reconstruction_loss
+                "classification_report": class_report,
+                "confusion_matrix": conf_matrix,
+                "error_rates": error_rates,
+                "test_accuracy": test_accuracy,
+                "reconstruction_loss": reconstruction_loss,
             }
 
             # Format results as string for display/saving
-            formatted_output = f"Results for Dataset: {self.forward_model.dataset_name}\n\n"
+            formatted_output = (
+                f"Results for Dataset: {self.forward_model.dataset_name}\n\n"
+            )
             formatted_output += f"Classification Report:\n{class_report}\n\n"
             formatted_output += "Confusion Matrix:\n"
-            formatted_output += "\n".join(["\t".join(map(str, row)) for row in conf_matrix])
+            formatted_output += "\n".join(
+                ["\t".join(map(str, row)) for row in conf_matrix]
+            )
             formatted_output += "\n\nError Rates:\n"
 
             if error_rates:
-                formatted_output += "\n".join([f"Epoch {i+1}: {rate:.4f}" for i, rate in enumerate(error_rates)])
+                formatted_output += "\n".join(
+                    [f"Epoch {i+1}: {rate:.4f}" for i, rate in enumerate(error_rates)]
+                )
             else:
                 formatted_output += "N/A"
 
             formatted_output += f"\n\nTest Accuracy: {test_accuracy:.4f}\n"
 
             # Store formatted output in results
-            results['formatted_output'] = formatted_output
+            results["formatted_output"] = formatted_output
 
             return results

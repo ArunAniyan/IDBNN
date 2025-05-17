@@ -1,17 +1,16 @@
-import os
-import sys
-import shutil
-import tarfile
-from torchvision import datasets
-import torchvision
-from typing import List, Dict, Tuple
 import argparse
 import json
-from typing import Dict, Any
-import numpy as np
-from PIL import Image
-from typing import Tuple, List, Dict, Any
+import os
+import shutil
+import sys
+import tarfile
 import zipfile  # Add this import at the top with other imports
+from typing import Any, Dict, List, Tuple
+
+import numpy as np
+import torchvision
+from PIL import Image
+
 
 def create_zip_archive(source_dir: str, output_zip: str) -> None:
     """
@@ -24,7 +23,7 @@ def create_zip_archive(source_dir: str, output_zip: str) -> None:
     # Ensure output directory exists
     os.makedirs(os.path.dirname(output_zip), exist_ok=True)
 
-    with zipfile.ZipFile(output_zip, 'w', zipfile.ZIP_DEFLATED) as zipf:
+    with zipfile.ZipFile(output_zip, "w", zipfile.ZIP_DEFLATED) as zipf:
         for root, _, files in os.walk(source_dir):
             for file in files:
                 file_path = os.path.join(root, file)
@@ -33,7 +32,10 @@ def create_zip_archive(source_dir: str, output_zip: str) -> None:
                 zipf.write(file_path, arcname)
     print(f"Created zip archive: {output_zip}")
 
-def get_image_properties(dataset_path: str) -> Tuple[int, Tuple[int, int], List[float], List[float]]:
+
+def get_image_properties(
+    dataset_path: str,
+) -> Tuple[int, Tuple[int, int], List[float], List[float]]:
     """
     Analyze images in the dataset to determine:
     - Number of channels (1 for grayscale, 3 for RGB)
@@ -63,7 +65,7 @@ def get_image_properties(dataset_path: str) -> Tuple[int, Tuple[int, int], List[
     img_array = np.array(img)
 
     # Special handling for MNIST which might be saved as L mode (8-bit pixels, black and white)
-    if img.mode == 'L':
+    if img.mode == "L":
         channels = 1
         height, width = img_array.shape
     elif len(img_array.shape) == 2:  # Grayscale
@@ -79,7 +81,7 @@ def get_image_properties(dataset_path: str) -> Tuple[int, Tuple[int, int], List[
 
     for root, _, files in os.walk(dataset_path):  # Walk the provided path directly
         for file in files:
-            if file.lower().endswith(('.png', '.jpg', '.jpeg')):
+            if file.lower().endswith((".png", ".jpg", ".jpeg")):
                 img = Image.open(os.path.join(root, file))
                 img_array = np.array(img)
 
@@ -90,9 +92,9 @@ def get_image_properties(dataset_path: str) -> Tuple[int, Tuple[int, int], List[
                     stds.append(np.std(img_array))
                 else:
                     if len(img_array.shape) == 2:
-                        img_array = np.stack([img_array]*3, axis=-1)
-                    means.append(np.mean(img_array, axis=(0,1)))
-                    stds.append(np.std(img_array, axis=(0,1)))
+                        img_array = np.stack([img_array] * 3, axis=-1)
+                    means.append(np.mean(img_array, axis=(0, 1)))
+                    stds.append(np.std(img_array, axis=(0, 1)))
 
                 sample_count += 1
                 if sample_count >= max_samples:
@@ -109,8 +111,14 @@ def get_image_properties(dataset_path: str) -> Tuple[int, Tuple[int, int], List[
 
     return channels, (width, height), mean_val, std_val
 
-def create_config_file(dataset_name: str, dataset_path: str, class_names: List[str],
-                      input_size: Tuple[int, int] = (32, 32), in_channels: int = 3) -> None:
+
+def create_config_file(
+    dataset_name: str,
+    dataset_path: str,
+    class_names: List[str],
+    input_size: Tuple[int, int] = (32, 32),
+    in_channels: int = 3,
+) -> None:
     """
     Create a JSON configuration file for the dataset based on the template.
     """
@@ -130,7 +138,9 @@ def create_config_file(dataset_name: str, dataset_path: str, class_names: List[s
             "std": std_val,
             "resize_images": True,
             "train_dir": train_path,
-            "test_dir": os.path.join(dataset_path, "test") if os.path.exists(os.path.join(dataset_path, "test")) else ""
+            "test_dir": os.path.join(dataset_path, "test")
+            if os.path.exists(os.path.join(dataset_path, "test"))
+            else "",
         },
         # Rest of the configuration can be copied from template
         "model": {
@@ -144,14 +154,14 @@ def create_config_file(dataset_name: str, dataset_path: str, class_names: List[s
                 "momentum": 0.9,
                 "beta1": 0.9,
                 "beta2": 0.999,
-                "epsilon": 1e-08
+                "epsilon": 1e-08,
             },
-           "scheduler": {
+            "scheduler": {
                 "type": "ReduceLROnPlateau",
                 "factor": 0.1,
                 "patience": 10,
                 "min_lr": 1e-06,
-                "verbose": True
+                "verbose": True,
             },
             "autoencoder_config": {
                 "reconstruction_weight": 1.0,
@@ -166,33 +176,24 @@ def create_config_file(dataset_name: str, dataset_path: str, class_names: List[s
                     "kl_divergence_weight": 0.5,
                     "classification_weight": 0.5,
                     "clustering_temperature": 1.0,
-                    "min_cluster_confidence": 0.7
-                }
+                    "min_cluster_confidence": 0.7,
+                },
             },
             "loss_functions": {
                 "structural": {
                     "enabled": True,
                     "weight": 1.0,
-                    "params": {
-                        "edge_weight": 1.0,
-                        "smoothness_weight": 0.5
-                    }
+                    "params": {"edge_weight": 1.0, "smoothness_weight": 0.5},
                 },
                 "color_enhancement": {
                     "enabled": True,
                     "weight": 0.8,
-                    "params": {
-                        "channel_weight": 0.5,
-                        "contrast_weight": 0.3
-                    }
+                    "params": {"channel_weight": 0.5, "contrast_weight": 0.3},
                 },
                 "morphology": {
                     "enabled": True,
                     "weight": 0.6,
-                    "params": {
-                        "shape_weight": 0.7,
-                        "symmetry_weight": 0.3
-                    }
+                    "params": {"shape_weight": 0.7, "symmetry_weight": 0.3},
                 },
                 "detail_preserving": {
                     "enabled": True,
@@ -200,8 +201,8 @@ def create_config_file(dataset_name: str, dataset_path: str, class_names: List[s
                     "params": {
                         "detail_weight": 1.0,
                         "texture_weight": 0.8,
-                        "frequency_weight": 0.6
-                    }
+                        "frequency_weight": 0.6,
+                    },
                 },
                 "astronomical_structure": {
                     "enabled": True,
@@ -209,8 +210,8 @@ def create_config_file(dataset_name: str, dataset_path: str, class_names: List[s
                     "components": {
                         "edge_preservation": True,
                         "peak_preservation": True,
-                        "detail_preservation": True
-                    }
+                        "detail_preservation": True,
+                    },
                 },
                 "medical_structure": {
                     "enabled": True,
@@ -218,8 +219,8 @@ def create_config_file(dataset_name: str, dataset_path: str, class_names: List[s
                     "components": {
                         "boundary_preservation": True,
                         "tissue_contrast": True,
-                        "local_structure": True
-                    }
+                        "local_structure": True,
+                    },
                 },
                 "agricultural_pattern": {
                     "enabled": True,
@@ -227,9 +228,9 @@ def create_config_file(dataset_name: str, dataset_path: str, class_names: List[s
                     "components": {
                         "texture_preservation": True,
                         "damage_pattern": True,
-                        "color_consistency": True
-                    }
-                }
+                        "color_consistency": True,
+                    },
+                },
             },
             "enhancement_modules": {
                 "astronomical": {
@@ -239,13 +240,13 @@ def create_config_file(dataset_name: str, dataset_path: str, class_names: List[s
                         "detail_preservation": True,
                         "star_detection": True,
                         "galaxy_features": True,
-                        "kl_divergence": True
+                        "kl_divergence": True,
                     },
                     "weights": {
                         "detail_weight": 1.0,
                         "structure_weight": 0.8,
-                        "edge_weight": 0.7
-                    }
+                        "edge_weight": 0.7,
+                    },
                 },
                 "medical": {
                     "enabled": True,
@@ -253,13 +254,13 @@ def create_config_file(dataset_name: str, dataset_path: str, class_names: List[s
                         "tissue_boundary": True,
                         "lesion_detection": True,
                         "contrast_enhancement": True,
-                        "subtle_feature_preservation": True
+                        "subtle_feature_preservation": True,
                     },
                     "weights": {
                         "boundary_weight": 1.0,
                         "lesion_weight": 0.8,
-                        "contrast_weight": 0.6
-                    }
+                        "contrast_weight": 0.6,
+                    },
                 },
                 "agricultural": {
                     "enabled": True,
@@ -268,15 +269,15 @@ def create_config_file(dataset_name: str, dataset_path: str, class_names: List[s
                         "damage_detection": True,
                         "color_anomaly": True,
                         "pattern_enhancement": True,
-                        "morphological_features": True
+                        "morphological_features": True,
                     },
                     "weights": {
                         "texture_weight": 1.0,
                         "damage_weight": 0.8,
-                        "pattern_weight": 0.7
-                    }
-                }
-            }
+                        "pattern_weight": 0.7,
+                    },
+                },
+            },
         },
         "training": {
             "batch_size": 128,
@@ -288,44 +289,22 @@ def create_config_file(dataset_name: str, dataset_path: str, class_names: List[s
             "reconstruction_weight": 0.5,
             "feedback_strength": 0.3,
             "inverse_learning_rate": 0.1,
-            "early_stopping": {
-                "patience": 5,
-                "min_delta": 0.001
-            }
+            "early_stopping": {"patience": 5, "min_delta": 0.001},
         },
         "augmentation": {
             "enabled": True,
-            "random_crop": {
-                "enabled": True,
-                "padding": 4
-            },
-            "random_rotation": {
-                "enabled": True,
-                "degrees": 10
-            },
-            "horizontal_flip": {
-                "enabled": True,
-                "probability": 0.5
-            },
-            "vertical_flip": {
-                "enabled": False
-            },
+            "random_crop": {"enabled": True, "padding": 4},
+            "random_rotation": {"enabled": True, "degrees": 10},
+            "horizontal_flip": {"enabled": True, "probability": 0.5},
+            "vertical_flip": {"enabled": False},
             "color_jitter": {
                 "enabled": True,
                 "brightness": 0.2,
                 "contrast": 0.2,
                 "saturation": 0.2,
-                "hue": 0.1
+                "hue": 0.1,
             },
-            "normalize": {
-                "enabled": True,
-                "mean": [
-                    0.5
-                ],
-                "std": [
-                    0.5
-                ]
-            }
+            "normalize": {"enabled": True, "mean": [0.5], "std": [0.5]},
         },
         "execution_flags": {
             "mode": "train_and_predict",
@@ -334,13 +313,13 @@ def create_config_file(dataset_name: str, dataset_path: str, class_names: List[s
             "distributed_training": False,
             "debug_mode": False,
             "use_previous_model": True,
-            "fresh_start": False
+            "fresh_start": False,
         },
         "output": {
             "features_file": "data/mnist/mnist.csv",
             "model_dir": "data/mnist/models",
-            "visualization_dir": "data/mnist/visualizations"
-        }
+            "visualization_dir": "data/mnist/visualizations",
+        },
     }
 
     # Automatically disable color jitter for grayscale images
@@ -348,7 +327,7 @@ def create_config_file(dataset_name: str, dataset_path: str, class_names: List[s
         config["augmentation"]["color_jitter"]["enabled"] = False
 
     # Save the configuration file
-    with open(config_path, 'w') as f:
+    with open(config_path, "w") as f:
         json.dump(config, f, indent=4)
     print(f"Created configuration file: {config_path}")
 
@@ -357,31 +336,40 @@ def list_available_datasets() -> List[str]:
     """List all available datasets in torchvision.datasets"""
     dataset_classes = []
     for name in dir(torchvision.datasets):
-        if name[0].isupper() and name not in ['VisionDataset', 'DatasetFolder', 'ImageFolder']:
+        if name[0].isupper() and name not in [
+            "VisionDataset",
+            "DatasetFolder",
+            "ImageFolder",
+        ]:
             dataset_classes.append(name)
     return sorted(dataset_classes)
+
 
 def get_dataset_info(dataset_name: str) -> Dict:
     """Get information about a specific dataset"""
     try:
         dataset_class = getattr(torchvision.datasets, dataset_name)
         return {
-            'name': dataset_name,
-            'has_train_test_split': hasattr(dataset_class, 'train') and hasattr(dataset_class, 'test'),
-            'default_root': os.path.join('data', dataset_name.lower())
+            "name": dataset_name,
+            "has_train_test_split": hasattr(dataset_class, "train")
+            and hasattr(dataset_class, "test"),
+            "default_root": os.path.join("data", dataset_name.lower()),
         }
     except AttributeError:
         raise ValueError(f"Dataset {dataset_name} not found in torchvision.datasets")
+
 
 def ensure_directory_exists(path: str) -> None:
     """Ensure a directory exists, create if it doesn't"""
     os.makedirs(path, exist_ok=True)
 
+
 def extract_tar_file(tar_path: str, extract_to: str) -> None:
     """Extract a tar file to the specified directory"""
     ensure_directory_exists(extract_to)
-    with tarfile.open(tar_path, 'r') as tar:
+    with tarfile.open(tar_path, "r") as tar:
         tar.extractall(path=extract_to)
+
 
 def move_all_to_train(dataset_root: str, train_path: str) -> List[str]:
     """
@@ -400,7 +388,7 @@ def move_all_to_train(dataset_root: str, train_path: str) -> List[str]:
     class_names = []
 
     # First check for train/test folders
-    for split in ['train', 'test']:
+    for split in ["train", "test"]:
         split_path = os.path.join(dataset_root, split)
         if os.path.exists(split_path):
             # Move all class folders from this split to train
@@ -440,11 +428,14 @@ def move_all_to_train(dataset_root: str, train_path: str) -> List[str]:
             item_path = os.path.join(dataset_root, item)
 
             # Skip hidden files and non-directories
-            if not os.path.isdir(item_path) or item.startswith('.'):
+            if not os.path.isdir(item_path) or item.startswith("."):
                 continue
 
             # If this is a directory that contains class folders (like 256_ObjectCategories)
-            if any(os.path.isdir(os.path.join(item_path, subitem)) for subitem in os.listdir(item_path)):
+            if any(
+                os.path.isdir(os.path.join(item_path, subitem))
+                for subitem in os.listdir(item_path)
+            ):
                 # Move all its subdirectories to train
                 for class_name in os.listdir(item_path):
                     class_path = os.path.join(item_path, class_name)
@@ -466,7 +457,10 @@ def move_all_to_train(dataset_root: str, train_path: str) -> List[str]:
 
     return sorted(class_names)
 
-def download_dataset(dataset_name: str, root: str, merge_train_test: bool = True, **kwargs) -> Tuple[str, List[str]]:
+
+def download_dataset(
+    dataset_name: str, root: str, merge_train_test: bool = True, **kwargs
+) -> Tuple[str, List[str]]:
     """
     Download and organize a torchvision dataset.
     Always creates data/<dataset>/train/<class_folders> structure.
@@ -482,7 +476,7 @@ def download_dataset(dataset_name: str, root: str, merge_train_test: bool = True
     """
     dataset_class = getattr(torchvision.datasets, dataset_name)
     dataset_path = os.path.join(root, dataset_name.lower())
-    train_path = os.path.join(dataset_path, 'train')
+    train_path = os.path.join(dataset_path, "train")
 
     # Clean up existing directory structure completely before processing
     if os.path.exists(dataset_path):
@@ -494,10 +488,10 @@ def download_dataset(dataset_name: str, root: str, merge_train_test: bool = True
         dataset = dataset_class(root=root, download=True, **kwargs)
 
         # Special handling for MNIST/FashionMNIST/KMNIST/EMNIST datasets
-        if dataset_name.lower() in ['mnist', 'fashionmnist', 'kmnist', 'emnist']:
+        if dataset_name.lower() in ["mnist", "fashionmnist", "kmnist", "emnist"]:
             # These datasets have different structure, we need to convert to image files
-            train_img_path = os.path.join(dataset_path, 'train')
-            test_img_path = os.path.join(dataset_path, 'test')
+            train_img_path = os.path.join(dataset_path, "train")
+            test_img_path = os.path.join(dataset_path, "test")
 
             # Create fresh directories
             os.makedirs(train_img_path, exist_ok=True)
@@ -524,13 +518,13 @@ def download_dataset(dataset_name: str, root: str, merge_train_test: bool = True
                     img.save(img_path)
 
             # Get class names
-            if hasattr(dataset, 'classes') and dataset.classes:
+            if hasattr(dataset, "classes") and dataset.classes:
                 class_names = dataset.classes
             else:
                 class_names = [str(i) for i in range(10)]  # Default for digit datasets
 
             # Clean up raw files
-            raw_dir = os.path.join(root, dataset_name.upper(), 'raw')
+            raw_dir = os.path.join(root, dataset_name.upper(), "raw")
             if os.path.exists(raw_dir):
                 shutil.rmtree(raw_dir)
 
@@ -555,8 +549,8 @@ def download_dataset(dataset_name: str, root: str, merge_train_test: bool = True
             return train_img_path, class_names
 
         # Special handling for Caltech256 which comes as a tar file
-        if dataset_name.lower() == 'caltech256':
-            tar_path = os.path.join(root, '256_ObjectCategories.tar')
+        if dataset_name.lower() == "caltech256":
+            tar_path = os.path.join(root, "256_ObjectCategories.tar")
             if os.path.exists(tar_path):
                 extract_tar_file(tar_path, dataset_path)
                 os.remove(tar_path)
@@ -565,13 +559,14 @@ def download_dataset(dataset_name: str, root: str, merge_train_test: bool = True
         class_names = move_all_to_train(dataset_path, train_path)
 
         # Get class names from dataset if available
-        if hasattr(dataset, 'classes') and dataset.classes:
+        if hasattr(dataset, "classes") and dataset.classes:
             return train_path, dataset.classes
         return train_path, class_names
 
     except Exception as e:
         print(f"Error processing dataset {dataset_name}: {str(e)}")
         raise
+
 
 def interactive_mode():
     """Interactive mode for dataset selection and downloading"""
@@ -581,7 +576,9 @@ def interactive_mode():
     for i, dataset in enumerate(available_datasets, 1):
         print(f"{i}. {dataset}")
 
-    dataset_name = input("\nEnter dataset name (press Enter to process all datasets): ").strip()
+    dataset_name = input(
+        "\nEnter dataset name (press Enter to process all datasets): "
+    ).strip()
 
     if not dataset_name:
         # Process all datasets
@@ -591,7 +588,10 @@ def interactive_mode():
         # Process single dataset
         process_dataset(dataset_name)
 
-def process_dataset(dataset_name: str, root: str = 'data', merge_train_test: bool = True) -> None:
+
+def process_dataset(
+    dataset_name: str, root: str = "data", merge_train_test: bool = True
+) -> None:
     """Process a single dataset including download, config creation, and zip archive"""
     if dataset_name not in list_available_datasets():
         print(f"Dataset '{dataset_name}' not found.")
@@ -599,44 +599,60 @@ def process_dataset(dataset_name: str, root: str = 'data', merge_train_test: boo
 
     print(f"\nProcessing dataset: {dataset_name}")
     try:
-        dataset_info = get_dataset_info(dataset_name)
+        get_dataset_info(dataset_name)
 
         # Download and organize dataset
         final_path, class_names = download_dataset(
-            dataset_name=dataset_name,
-            root=root,
-            merge_train_test=merge_train_test
+            dataset_name=dataset_name, root=root, merge_train_test=merge_train_test
         )
 
         # Create configuration file with actual image properties
         create_config_file(
             dataset_name=dataset_name,
             dataset_path=os.path.join(root, dataset_name.lower()),
-            class_names=class_names
+            class_names=class_names,
         )
 
         # Create zip archive of the training data
-        train_dir = os.path.join(root, dataset_name.lower(), 'train')
-        output_zip = os.path.join('Data', f'{dataset_name.lower()}.zip')
+        train_dir = os.path.join(root, dataset_name.lower(), "train")
+        output_zip = os.path.join("Data", f"{dataset_name.lower()}.zip")
         create_zip_archive(train_dir, output_zip)
 
         print(f"\nSuccessfully processed dataset:")
         print(f"- Files saved to: {final_path}")
         print(f"- Found {len(class_names)} classes")
-        print(f"- Configuration file created: {os.path.join(root, dataset_name.lower(), f'{dataset_name.lower()}.json')}")
+        print(
+            f"- Configuration file created: {os.path.join(root, dataset_name.lower(), f'{dataset_name.lower()}.json')}"
+        )
         print(f"- Training data archived to: {output_zip}")
 
     except Exception as e:
         print(f"Error processing dataset {dataset_name}: {str(e)}")
 
+
 def main():
     if len(sys.argv) > 1:
         # Command line mode
-        parser = argparse.ArgumentParser(description='Download and organize torchvision image datasets')
-        parser.add_argument('--dataset', type=str, default='', help='Name of dataset to download')
-        parser.add_argument('--root', type=str, default='data', help='Root directory for downloaded datasets')
-        parser.add_argument('--merge', action='store_true', help='Merge train and test sets (if available)')
-        parser.add_argument('--all', action='store_true', help='Download all available datasets')
+        parser = argparse.ArgumentParser(
+            description="Download and organize torchvision image datasets"
+        )
+        parser.add_argument(
+            "--dataset", type=str, default="", help="Name of dataset to download"
+        )
+        parser.add_argument(
+            "--root",
+            type=str,
+            default="data",
+            help="Root directory for downloaded datasets",
+        )
+        parser.add_argument(
+            "--merge",
+            action="store_true",
+            help="Merge train and test sets (if available)",
+        )
+        parser.add_argument(
+            "--all", action="store_true", help="Download all available datasets"
+        )
         args = parser.parse_args()
 
         if args.dataset or args.all:
@@ -658,6 +674,7 @@ def main():
         # Interactive mode
         interactive_mode()
 
+
 def interactive_mode():
     """Interactive mode for dataset selection and downloading"""
     available_datasets = list_available_datasets()
@@ -666,7 +683,9 @@ def interactive_mode():
     for i, dataset in enumerate(available_datasets, 1):
         print(f"{i}. {dataset}")
 
-    dataset_name = input("\nEnter dataset name (press Enter to process all datasets): ").strip()
+    dataset_name = input(
+        "\nEnter dataset name (press Enter to process all datasets): "
+    ).strip()
 
     if not dataset_name:
         # Process all datasets

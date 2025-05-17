@@ -1,15 +1,15 @@
 {
-    "mode": "train",
-    "data_type": "torchvision",
-    "data": "mnist",
-    "invert_dbnn": true,
-    "encoder_type": "cnn",
-    "batch_size": 32,
-    "epochs": 20,
-    "output_dir": "data",
-    "workers": 4,
-    "learning_rate": 0.01,
-    "cpu": false,
-    "debug": false,
-    "config": null
+  "mode": "train",
+  "data_type": "torchvision",
+  "data": "mnist",
+  "invert_dbnn": true,
+  "encoder_type": "cnn",
+  "batch_size": 32,
+  "epochs": 20,
+  "output_dir": "data",
+  "workers": 4,
+  "learning_rate": 0.01,
+  "cpu": false,
+  "debug": false,
+  "config": null
 }
